@@ -1,0 +1,131 @@
+﻿@model IEnumerable<QLBV.Models.KHOA>
+
+@{
+    ViewBag.Title = "Chuyên Khoa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4">Danh sách chuyên khoa</h2>
+
+<!-- Thanh tìm kiếm chuyên khoa -->
+<div class="row mb-4">
+    <div class="col-md-6 offset-md-3">
+        <label>Tìm chuyên khoa theo tên</label>
+        <div class="input-group">
+            <input type="text" id="txtTimKhoa" class="form-control" placeholder="Nhập tên chuyên khoa..." />
+            <button class="btn btn-outline-secondary" type="button" id="btnTimKhoa">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        <input type="hidden" id="selectedKhoaId" name="selectedKhoaId" />
+    </div>
+</div>
+
+<!-- Danh sách chuyên khoa -->
+<div class="container">
+    <div class="row" id="dsKhoa">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3 col-sm-6 mb-3 khoa-item" data-id="@item.KHOA_ID" data-ten="@item.TENKHOA">
+                <div class="p-3 text-center text-white khoa-box" style="background:#0066CC;border-radius:12px;cursor:pointer;">
+                    <h5>@item.TENKHOA</h5>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- CSS + JS -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<script>
+    $(function () {
+
+        // Autocomplete khi gõ tên khoa (chỉ gợi ý, không redirect)
+        $("#txtTimKhoa").autocomplete({
+            source: function (request, response) {
+                $.getJSON("/Home/GetKhoaTheoTen", { term: request.term.trim() }, function (data) {
+                    response(data);
+                });
+            },
+            minLength: 2
+        });
+
+        // Click trực tiếp vào ô vuông của khoa => chuyển sang danh sách bác sĩ
+        $(".khoa-item").click(function () {
+            var id = $(this).data("id");
+            window.location.href = "/Home/LocBSTheoKhoa?id=" + id;
+        });
+
+        // Nhấn Enter hoặc click nút tìm kiếm => chỉ lọc các ô khoa hiện tại
+        function filterKhoa() {
+            var term = $("#txtTimKhoa").val().trim().toLowerCase();
+            if (term.length === 0) {
+                $(".khoa-item").show();
+                return;
+            }
+
+            var found = false;
+            $(".khoa-item").each(function () {
+                var khoa = $(this).data("ten").toLowerCase();
+                if (khoa.indexOf(term) >= 0) {
+                    $(this).show();
+                    found = true;
+                } else {
+                    $(this).hide();
+                }
+            });
+
+            if (!found) {
+                alert("Không tìm thấy chuyên khoa phù hợp.");
+            }
+        }
+
+        $("#txtTimKhoa").keypress(function (e) {
+            if (e.which == 13) {
+                filterKhoa();
+            }
+        });
+
+        $("#btnTimKhoa").click(function () {
+            filterKhoa();
+        });
+
+    });
+</script>
+
+
+<style>
+    .khoa-box {
+        transition: 0.3s;
+        padding: 30px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 120px;
+        border-radius: 12px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .khoa-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 12px rgba(0,0,0,0.25);
+        background: #004C99 !important;
+    }
+
+    .khoa-box h5 {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin: 0;
+        line-height: 1.2;
+        color: #ffffff;
+    }
+
+    
+</style>
+
+

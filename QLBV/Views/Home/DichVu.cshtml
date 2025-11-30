@@ -1,0 +1,39 @@
+﻿@model IEnumerable<QLBV.Models.DICHVU>
+
+@{
+    ViewBag.Title = "Bảng Giá Dịch Vụ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4 text-center">Bảng Giá Dịch Vụ</h2>
+
+<table class="table table-striped table-bordered table-hover">
+    <thead class="table-dark text-center">
+        <tr>
+            <th>Tên dịch vụ</th>
+            <th>Giá</th>
+            <th>Thông tin chi tiết</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TENDV</td>
+                <td>@String.Format("{0:N0} VNĐ", item.DONGIA)</td>
+                <td>@item.GHICHU</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+    table th, table td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f2f2f2;
+    }
+</style>

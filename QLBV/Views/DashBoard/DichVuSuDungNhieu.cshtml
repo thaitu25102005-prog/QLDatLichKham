@@ -1,0 +1,20 @@
+﻿@model List<QLBV.Models.ThongKeDV>
+@{
+    int maxSoLuong = Model.Max(x => x.SoLuotDungDV);
+    Layout = null;
+}
+
+<div class="card-body">
+    @foreach (var item in Model)
+    {
+        <div class="mb-3">
+            <div class="d-flex justify-content-between mb-1">
+                <small>@item.TENDV</small>
+                <small class="text-muted">@item.SoLuotDungDV Lượt Sử Dụng</small>
+            </div>
+            <div class="progress progress-sm">
+                <div class="progress-bar bg-primary" style="width: @((item.SoLuotDungDV / (double)maxSoLuong) * 100)%"></div>
+            </div>
+        </div>
+    }
+</div>

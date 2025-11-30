@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Tra cứu kết quả";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Tra cứu kết quả</h2>
+
+<form action="/Home/TraCuuKetQua" method="get">
+    <div class="mb-3">
+        <label>CCCD</label>
+        <input type="text" name="cccd" class="form-control" placeholder="Nhập CCCD" maxlength="12" />
+    </div>
+    <div class="mb-3">
+        <label>Mã bệnh nhân</label>
+        <input type="text" name="mabn" class="form-control" placeholder="Nhập Mã bệnh nhân" />
+    </div>
+    <button type="submit" class="btn btn-primary">Tìm</button>
+</form>

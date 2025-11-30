@@ -1,0 +1,156 @@
+﻿@{
+    ViewBag.Title = "Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row">
+
+        <!-- FORM BÊN TRÁI -->
+        <div class="col-md-4">
+            <div class="p-3" style="background:#003A91;color:white;border-radius:10px;">
+                <h4 class="mb-3">ĐĂNG KÝ KHÁM BỆNH</h4>
+                <!-- Nhập CCCD -->
+                <label class="mt-3"><b>CCCD</b></label>
+                <input type="text" id="txtCCCD" class="form-control" maxlength="12" placeholder="Nhập 12 số CCCD" />
+
+
+                <!-- Chọn khoa -->
+                <label><b>Chọn chuyên khoa</b></label>
+                <select id="cboKhoa" class="form-control">
+                    <option value="">-- Chọn chuyên khoa --</option>
+                    @foreach (var k in ViewBag.ListKhoa)
+                    {
+                        <option value="@k.KHOA_ID">@k.TENKHOA</option>
+                    }
+                </select>
+
+                <!-- Chọn bác sĩ -->
+                <label class="mt-3"><b>Chọn bác sĩ</b></label>
+                <select id="cboBacSi" class="form-control">
+                    <option value="">-- Chọn bác sĩ --</option>
+                </select>
+
+                <!-- Chọn ca khám -->
+                <label class="mt-3"><b>Chọn ca khám</b></label>
+                <select id="cboCaKham" class="form-control">
+                    <option value="1">08:00</option>
+                    <option value="2">08:30</option>
+                    <option value="3">09:00</option>
+                    <option value="4">09:30</option>
+                    <option value="5">13:00</option>
+                    <option value="6">13:30</option>
+                    <option value="7">14:00</option>
+                    <option value="8">14:30</option>
+                </select>
+
+
+                <!-- Ngày -->
+                <label class="mt-3"><b>Ngày khám</b></label>
+                <input type="date" id="ngayKham" class="form-control" />
+
+                <button class="btn btn-warning mt-3 w-100" id="btnDangKy">Đăng ký khám</button>
+            </div>
+        </div>
+
+        <!-- KHỐI BÊN PHẢI -->
+        <div class="col-md-8 text-center">
+            <h3 class="mb-4">HỆ THỐNG QUẢN LÝ BỆNH VIỆN</h3>
+
+            <div class="row">
+                <!-- Chuyên Khoa -->
+                <div class="col-md-6 mb-3">
+                    <a href="/Home/ChuyenKhoa" style="text-decoration:none;">
+                        <div class="p-4 text-white" style="background:#0066CC;border-radius:10px;">
+                            <i class="fa fa-medkit fa-3x mb-3" style="color:red;"></i>
+
+                            <h4>Chuyên khoa</h4>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Chuyên gia – Bác sĩ -->
+                <div class="col-md-6 mb-3">
+                    <a href="/Home/ChuyenGia" style="text-decoration:none;">
+                        <div class="p-4 text-white" style="background:#004C99;border-radius:10px;">
+                            <i class="fa fa-user-md fa-3x mb-3"></i>
+                            <h4>Chuyên gia – Bác sĩ</h4>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Dịch vụ -->
+                <div class="col-md-6 mb-3">
+                    <a href="/Home/DichVu" style="text-decoration:none;">
+                        <div class="p-4 text-white" style="background:#003E80;border-radius:10px;">
+                            <i class="fa fa-stethoscope fa-3x mb-3"></i>
+                            <h4>Dịch vụ</h4>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Tra cứu kết quả -->
+                <div class="col-md-6 mb-3">
+                    <a href="/Home/TraCuu" style="text-decoration:none;">
+                        <div class="p-4 text-white" style="background:#002D66;border-radius:10px;">
+                            <i class="fa fa-search fa-3x mb-3"></i>
+                            <h4>Tra cứu kết quả</h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    // Load bác sĩ theo khoa
+    $("#cboKhoa").change(function () {
+        var makhoa = $(this).val();
+        if (!makhoa) {
+            $("#cboBacSi").html('<option value="">-- Chọn bác sĩ --</option>');
+            return;
+        }
+
+        $.getJSON("/Home/GetBacSiTheoKhoa", { makhoa: makhoa }, function (data) {
+            $("#cboBacSi").html('<option value="">-- Chọn bác sĩ --</option>');
+            $.each(data, function (i, item) {
+                $("#cboBacSi").append(
+                    `<option value="${item.BACSI_ID}">${item.TENBACSI}</option>`
+                );
+            });
+
+        });
+    });
+
+    // Đăng ký lịch khám
+    $("#btnDangKy").click(function () {
+        var mabacsi = $("#cboBacSi").val();
+        var ngaykham = $("#ngayKham").val();
+        var cakhams = parseInt($("#cboCaKham").val());
+        var cccd = $("#txtCCCD").val().trim();
+
+        if (!mabacsi || !ngaykham || !cakhams || !cccd) {
+            alert("Vui lòng điền đầy đủ thông tin!");
+            return;
+        }
+
+        if (!/^\d{12}$/.test(cccd)) {
+            alert("CCCD phải là chuỗi 12 số.");
+            return;
+        }
+
+        $.post("/Home/DatLichKham",
+            { mabacsi, ngaykham, cakhams, cccd },
+            function (res) {
+                alert(res.message);
+            }
+        );
+    });
+
+
+
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />

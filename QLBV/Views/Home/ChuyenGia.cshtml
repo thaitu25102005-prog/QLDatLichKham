@@ -1,0 +1,151 @@
+﻿@model IEnumerable<QLBV.Models.BACSI>
+
+@{
+    ViewBag.Title = "Chuyên Gia – Bác Sĩ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4 text-center">Danh sách bác sĩ</h2>
+
+@using (Html.BeginForm("ChuyenGia", "Home", FormMethod.Get))
+{
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label>Khoa</label>
+            @Html.DropDownList("khoaId", (SelectList)ViewBag.KHOA_ID, "Tất cả", new { @class = "form-control" })
+        </div>
+        <div class="col-md-3">
+            <label>Học hàm</label>
+            @Html.DropDownList("hocHam", (SelectList)ViewBag.HOCHAM, "Tất cả", new { @class = "form-control" })
+        </div>
+        <div class="col-md-3">
+            <label>Học vị</label>
+            @Html.DropDownList("hocVi", (SelectList)ViewBag.HOCVI, "Tất cả", new { @class = "form-control" })
+        </div>
+        <div class="col-md-3">
+            <label>Chức vụ</label>
+            @Html.DropDownList("chucVu", (SelectList)ViewBag.CHUCVU, "Tất cả", new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-12 mt-3">
+            <button type="submit" class="btn btn-primary">Lọc</button>
+            <a href="@Url.Action("ChuyenGia", "Home")" class="btn btn-secondary">Xóa lọc</a>
+        </div>
+    </div>
+}
+
+<!-- Thanh tìm kiếm bác sĩ -->
+<div class="row mb-4">
+    <div class="col-md-6 offset-md-3">
+        <label>Tìm bác sĩ theo tên</label>
+        <div class="input-group">
+            <input type="text" id="txtTimBacSi" class="form-control" placeholder="Nhập tên bác sĩ..." />
+            <button class="btn btn-outline-secondary" type="button" id="btnTimBacSi">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        <input type="hidden" id="selectedBacSiId" name="selectedBacSiId" />
+    </div>
+</div>
+
+<!-- Danh sách bác sĩ -->
+<div class="container">
+    <div id="dsBacSi" class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3 col-sm-6 mb-4 doctor-item">
+                <div class="card shadow-sm doctor-card" style="border-radius:12px;">
+                    <img src="@item.AVATAR" class="card-img-top" style="height:180px;object-fit:cover;border-radius:12px 12px 0 0;" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">@item.TENBACSI</h5>
+                        <p class="text-muted mb-1"><b>@item.HOCVI</b> – @item.HOCHAM</p>
+                        <p class="mb-1"><i class="fas fa-briefcase-medical"></i> @item.CHUCVU</p>
+                        <a href="@Url.Action("XemCTBS", "Home", new { id = item.BACSI_ID })" class="btn btn-primary btn-sm">Xem chi tiết</a>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- CSS + JS -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+<script>
+    $(function () {
+        function renderBacSi(data) {
+            var html = '';
+            if (data.length == 0) {
+                html = '<div class="col-12 text-center"><p>Không có dữ liệu bác sĩ phù hợp.</p></div>';
+            } else {
+                $.each(data, function (i, b) {
+                    html += `
+                        <div class="col-md-3 col-sm-6 mb-4 doctor-item">
+                            <div class="card shadow-sm doctor-card" style="border-radius:12px;">
+                                <img src="${b.AVATAR || '/images/default-avatar.png'}" class="card-img-top" style="height:180px;object-fit:cover;border-radius:12px 12px 0 0;" />
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">${b.value}</h5>
+                                    <p class="text-muted mb-1"><b>${b.HOCVI}</b> – ${b.HOCHAM}</p>
+                                    <p class="mb-1"><i class="fas fa-briefcase-medical"></i> ${b.CHUCVU}</p>
+                                    <a href="/Home/XemCTBS/${b.id}" class="btn btn-primary btn-sm">Xem chi tiết</a>
+                                </div>
+                            </div>
+                        </div>`;
+                });
+            }
+            $("#dsBacSi").html(html);
+        }
+
+        function searchBacSi() {
+            var ten = $("#txtTimBacSi").val();
+            if (ten.length >= 2) {
+                $.getJSON("/Home/GetBacSiTheoTen", { term: ten }, function (data) {
+                    renderBacSi(data);
+                });
+            } else {
+                alert("Vui lòng nhập ít nhất 2 ký tự để tìm kiếm.");
+            }
+        }
+
+        // Autocomplete
+        $("#txtTimBacSi").autocomplete({
+            source: function (request, response) {
+                $.getJSON("/Home/GetBacSiTheoTen", { term: request.term }, function (data) {
+                    response(data);
+                });
+            },
+            minLength: 2,
+            select: function (event, ui) {
+                $("#selectedBacSiId").val(ui.item.id);
+                renderBacSi([ui.item]);
+            }
+        });
+
+        // Nút kính lúp click
+        $("#btnTimBacSi").click(searchBacSi);
+
+        // Nhấn Enter trong ô input
+        $("#txtTimBacSi").keypress(function (e) {
+            if (e.which == 13) { // Enter
+                e.preventDefault(); // tránh submit form nếu có
+                searchBacSi();
+            }
+        });
+    });
+</script>
+
+<style>
+    .doctor-card {
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+        .doctor-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25) !important;
+        }
+</style>

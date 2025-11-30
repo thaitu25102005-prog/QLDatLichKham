@@ -1,0 +1,48 @@
+﻿@model List<QLBV.Models.BENHNHAN>
+@{
+    Layout = "~/Views/Shared/_LayoutBacSi.cshtml";
+}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Họ tên</th>
+            <th>Giờ khám</th>
+            <th>CCCD</th>
+            <th>SDT</th>
+            <th>Giới tính</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var lichHomNay = Model[i].DATLICHKHAMs
+                .FirstOrDefault(d => d.NGAYKHAM == DateTime.Today && d.TRANGTHAI == "Đã đặt");
+
+            <tr>
+                <td>@(i + 1)</td>
+                <td>@Model[i].HOTENBENHNHAN</td>
+                @{
+                    var gioKham = lichHomNay?.CAKHAM_MAPPING?.GIOKHAM;
+                }
+                <td>@(gioKham.HasValue ? gioKham.Value.ToString(@"hh\:mm") : "—")</td>
+
+                <td>@Model[i].CCCD</td>
+                <td>@Model[i].SDT</td>
+                <td>@Model[i].GIOITINH</td>
+                <td>
+                    @if (lichHomNay != null)
+                    {
+                        <a href="@Url.Action("KhamBenh", "BS", new { datLichKhamId = lichHomNay.DATLICHKHAM_ID })" class="btn btn-sm btn-success">Khám</a>
+                    }
+                    else
+                    {
+                        <span class="text-muted">Chưa đặt lịch hôm nay</span>
+                    }
+                    <a href="@Url.Action("SuaBenhNhan", "BS", new { id = Model[i].BNHAN_ID })" class="btn btn-sm btn-warning">Sửa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

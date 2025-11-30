@@ -1,0 +1,165 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- Dashboard Content -->
+<div class="px-4" id="mainContent">
+    <!-- Statistics Cards -->
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card stat-card primary">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Doanh Thu Hôm Nay
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Action("DoanhThuNgay", "DashBoard")</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa-solid fa-cash-register"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card stat-card success">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Bác Sĩ Đang Công Tác Tại Bệnh Viện
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Action("SoLuongBS", "DashBoard")</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa-solid fa-user-doctor"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card stat-card info">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Số Lượng Bệnh Nhân Hôm Nay
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Action("SoBenhNhanHomNay", "DashBoard")</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa-solid fa-hospital-user"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card stat-card warning">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Số Lịch Khám Hôm Nay
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Action("LichKhamHomNay", "DashBoard")</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa-solid fa-calendar"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row">
+        <div class="col-xl-12 mb-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Biểu Đồ Doanh Thu Tháng</span>
+                    @*<div class="btn-group btn-group-sm" role="group">
+
+                            <button type="button" class="btn btn-primary">@Html.Action("DoanhThuThang", "DoanhThu")</button>
+
+                        </div>*@
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa-solid fa-stethoscope"></i>
+                    Dịch Vụ Được Sử Dụng Nhiều Nhất
+                </div>
+                @Html.Action("DichVuSuDungNhieu", "DashBoard")
+            </div>
+        </div>
+        <div class="col-xl-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    Doanh Thu Tháng
+                </div>
+                <div class="fw-bold text-danger mb-0">
+                    @Html.Action("DoanhThuThang", "DashBoard")
+                </div>
+            </div>
+        </div>
+        @*<div class="col-xl-4 mb-4 card stat-card primary">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Doanh Thu Tháng
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Action("DoanhThuThang", "DashBoard")</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar stat-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+
+    <!-- Recent Orders & Quick Actions -->
+    <!--<div class="row">
+        <div class="col-xl-12 mb-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Đơn Hàng Gần Đây</span>
+
+                </div>-->
+                @*@Html.Action("DonHangGanDay", "DashBoard")*@
+            <!--</div>
+        </div>
+
+    </div>
+
+    <!-- Inventory Warning -->
+    <!--<div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Sản Phẩm Sắp Hết Hàng</span>-->
+                    @*<a href="#inventory" class="btn btn-sm btn-danger">Nhập Hàng</a>*@
+                <!--</div>-->
+                @*@Html.Action("SanPhamSapHet", "DashBoard")*@
+            </div>
+        </div>
+    </div>-->
+</div>

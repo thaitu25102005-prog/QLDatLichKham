@@ -1,0 +1,1078 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="QL_BENHVIENModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BACSI">
+          <Key>
+            <PropertyRef Name="BACSI_ID" />
+          </Key>
+          <Property Name="BACSI_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MABACSI" Type="varchar" MaxLength="5" StoreGeneratedPattern="Computed" />
+          <Property Name="TENBACSI" Type="nvarchar" MaxLength="100" />
+          <Property Name="GIOITINH" Type="nvarchar" MaxLength="10" />
+          <Property Name="NAMSINH" Type="int" />
+          <Property Name="KHOA_ID" Type="int" />
+          <Property Name="SOBN" Type="int" />
+          <Property Name="HOCHAM" Type="nvarchar" MaxLength="20" />
+          <Property Name="HOCVI" Type="nvarchar" MaxLength="50" />
+          <Property Name="CHUCVU" Type="nvarchar" MaxLength="50" />
+          <Property Name="AVATAR" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="BENHNHAN">
+          <Key>
+            <PropertyRef Name="BNHAN_ID" />
+          </Key>
+          <Property Name="BNHAN_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MABENHNHAN" Type="varchar" MaxLength="5" StoreGeneratedPattern="Computed" />
+          <Property Name="HOTENBENHNHAN" Type="nvarchar" MaxLength="100" />
+          <Property Name="SDT" Type="varchar" MaxLength="15" />
+          <Property Name="GIOITINH" Type="nvarchar" MaxLength="10" />
+          <Property Name="BACSI_ID" Type="int" />
+          <Property Name="AVATAR" Type="nvarchar" MaxLength="200" />
+          <Property Name="CCCD" Type="varchar" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="BENHVIEN">
+          <Key>
+            <PropertyRef Name="BENHVIEN_ID" />
+          </Key>
+          <Property Name="BENHVIEN_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MABENHVIEN" Type="varchar" MaxLength="5" StoreGeneratedPattern="Computed" />
+          <Property Name="TENBENHVIEN" Type="nvarchar" MaxLength="100" />
+          <Property Name="SDT" Type="varchar" MaxLength="15" />
+          <Property Name="DIACHI" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="CAKHAM_MAPPING">
+          <Key>
+            <PropertyRef Name="CAKHAM_ID" />
+          </Key>
+          <Property Name="CAKHAM_ID" Type="int" Nullable="false" />
+          <Property Name="GIOKHAM" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="CHITIETHOADON">
+          <Key>
+            <PropertyRef Name="CTHD_ID" />
+          </Key>
+          <Property Name="CTHD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HOADON_ID" Type="int" />
+          <Property Name="DICHVU_ID" Type="int" />
+          <Property Name="SOLUONG" Type="int" />
+          <Property Name="THANHTIEN" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="DATLICHKHAM">
+          <Key>
+            <PropertyRef Name="DATLICHKHAM_ID" />
+          </Key>
+          <Property Name="DATLICHKHAM_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BNHAN_ID" Type="int" />
+          <Property Name="BACSI_ID" Type="int" />
+          <Property Name="NGAYKHAM" Type="date" />
+          <Property Name="CAKHAM_ID" Type="int" />
+          <Property Name="TRANGTHAI" Type="nvarchar" MaxLength="50" />
+          <Property Name="THOIGIANDAT" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DICHVU">
+          <Key>
+            <PropertyRef Name="DV_ID" />
+          </Key>
+          <Property Name="DV_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MADV" Type="varchar" MaxLength="5" StoreGeneratedPattern="Computed" />
+          <Property Name="TENDV" Type="nvarchar" MaxLength="100" />
+          <Property Name="DONGIA" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="GHICHU" Type="nvarchar" MaxLength="200" />
+          <Property Name="KHOA_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="HOADON">
+          <Key>
+            <PropertyRef Name="HD_ID" />
+          </Key>
+          <Property Name="HD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MAHD" Type="varchar" MaxLength="5" StoreGeneratedPattern="Computed" />
+          <Property Name="DATLICHKHAM_ID" Type="int" />
+          <Property Name="NGAYLAP" Type="date" />
+          <Property Name="TONGTIEN" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="HINHTHUCTHANHTOAN" Type="nvarchar" MaxLength="50" />
+          <Property Name="GHICHU" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="KETQUAKHAM">
+          <Key>
+            <PropertyRef Name="KQ_ID" />
+          </Key>
+          <Property Name="KQ_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MAKQ" Type="varchar" MaxLength="5" StoreGeneratedPattern="Computed" />
+          <Property Name="DATLICHKHAM_ID" Type="int" />
+          <Property Name="CHUANDOAN" Type="nvarchar" MaxLength="300" />
+          <Property Name="KETLUAN" Type="nvarchar" MaxLength="300" />
+          <Property Name="THANHVIEN" Type="nvarchar" MaxLength="200" />
+          <Property Name="GHICHU" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="KHOA">
+          <Key>
+            <PropertyRef Name="KHOA_ID" />
+          </Key>
+          <Property Name="KHOA_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MAKHOA" Type="varchar" MaxLength="4" StoreGeneratedPattern="Computed" />
+          <Property Name="TENKHOA" Type="nvarchar" MaxLength="100" />
+          <Property Name="BENHVIEN_ID" Type="int" />
+          <Property Name="SOBS" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK__BACSI__KHOA_ID__4E88ABD4">
+          <End Role="KHOA" Type="Self.KHOA" Multiplicity="0..1" />
+          <End Role="BACSI" Type="Self.BACSI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHOA">
+              <PropertyRef Name="KHOA_ID" />
+            </Principal>
+            <Dependent Role="BACSI">
+              <PropertyRef Name="KHOA_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BENHNHAN__BACSI___52593CB8">
+          <End Role="BACSI" Type="Self.BACSI" Multiplicity="0..1" />
+          <End Role="BENHNHAN" Type="Self.BENHNHAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BACSI">
+              <PropertyRef Name="BACSI_ID" />
+            </Principal>
+            <Dependent Role="BENHNHAN">
+              <PropertyRef Name="BACSI_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CHITIETHO__DICHV__6383C8BA">
+          <End Role="DICHVU" Type="Self.DICHVU" Multiplicity="0..1" />
+          <End Role="CHITIETHOADON" Type="Self.CHITIETHOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DICHVU">
+              <PropertyRef Name="DV_ID" />
+            </Principal>
+            <Dependent Role="CHITIETHOADON">
+              <PropertyRef Name="DICHVU_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CHITIETHO__HOADO__628FA481">
+          <End Role="HOADON" Type="Self.HOADON" Multiplicity="0..1" />
+          <End Role="CHITIETHOADON" Type="Self.CHITIETHOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HOADON">
+              <PropertyRef Name="HD_ID" />
+            </Principal>
+            <Dependent Role="CHITIETHOADON">
+              <PropertyRef Name="HOADON_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DATLICHKH__BACSI__5BE2A6F2">
+          <End Role="BACSI" Type="Self.BACSI" Multiplicity="0..1" />
+          <End Role="DATLICHKHAM" Type="Self.DATLICHKHAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BACSI">
+              <PropertyRef Name="BACSI_ID" />
+            </Principal>
+            <Dependent Role="DATLICHKHAM">
+              <PropertyRef Name="BACSI_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DATLICHKH__BNHAN__5AEE82B9">
+          <End Role="BENHNHAN" Type="Self.BENHNHAN" Multiplicity="0..1" />
+          <End Role="DATLICHKHAM" Type="Self.DATLICHKHAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BENHNHAN">
+              <PropertyRef Name="BNHAN_ID" />
+            </Principal>
+            <Dependent Role="DATLICHKHAM">
+              <PropertyRef Name="BNHAN_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DATLICHKH__CAKHA__5CD6CB2B">
+          <End Role="CAKHAM_MAPPING" Type="Self.CAKHAM_MAPPING" Multiplicity="0..1" />
+          <End Role="DATLICHKHAM" Type="Self.DATLICHKHAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAKHAM_MAPPING">
+              <PropertyRef Name="CAKHAM_ID" />
+            </Principal>
+            <Dependent Role="DATLICHKHAM">
+              <PropertyRef Name="CAKHAM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DICHVU__KHOA_ID__5535A963">
+          <End Role="KHOA" Type="Self.KHOA" Multiplicity="0..1" />
+          <End Role="DICHVU" Type="Self.DICHVU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHOA">
+              <PropertyRef Name="KHOA_ID" />
+            </Principal>
+            <Dependent Role="DICHVU">
+              <PropertyRef Name="KHOA_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HOADON__DATLICHK__5FB337D6">
+          <End Role="DATLICHKHAM" Type="Self.DATLICHKHAM" Multiplicity="0..1" />
+          <End Role="HOADON" Type="Self.HOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DATLICHKHAM">
+              <PropertyRef Name="DATLICHKHAM_ID" />
+            </Principal>
+            <Dependent Role="HOADON">
+              <PropertyRef Name="DATLICHKHAM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KETQUAKHA__DATLI__66603565">
+          <End Role="DATLICHKHAM" Type="Self.DATLICHKHAM" Multiplicity="0..1" />
+          <End Role="KETQUAKHAM" Type="Self.KETQUAKHAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DATLICHKHAM">
+              <PropertyRef Name="DATLICHKHAM_ID" />
+            </Principal>
+            <Dependent Role="KETQUAKHAM">
+              <PropertyRef Name="DATLICHKHAM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KHOA__BENHVIEN_I__4BAC3F29">
+          <End Role="BENHVIEN" Type="Self.BENHVIEN" Multiplicity="0..1" />
+          <End Role="KHOA" Type="Self.KHOA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BENHVIEN">
+              <PropertyRef Name="BENHVIEN_ID" />
+            </Principal>
+            <Dependent Role="KHOA">
+              <PropertyRef Name="BENHVIEN_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="FN_TimKiemKhoa" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TENKHOA" Type="nvarchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="MAKHOA" Type="varchar" MaxLength="4" />
+                <Property Name="TENKHOA" Type="nvarchar" MaxLength="100" />
+                <Property Name="SOBS" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="FN_XuatKetQuaDaKham_TheoBN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MABN" Type="nvarchar" Mode="In" />
+          <Parameter Name="CCCD" Type="nvarchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="MAKQ" Type="varchar" MaxLength="5" />
+                <Property Name="MABENHNHAN" Type="varchar" MaxLength="5" />
+                <Property Name="HOTENBENHNHAN" Type="nvarchar" MaxLength="100" />
+                <Property Name="GIOITINH" Type="nvarchar" MaxLength="10" />
+                <Property Name="SDT" Type="varchar" MaxLength="15" />
+                <Property Name="MABACSI" Type="varchar" MaxLength="5" />
+                <Property Name="TENBACSI" Type="nvarchar" MaxLength="100" />
+                <Property Name="TENKHOA" Type="nvarchar" MaxLength="100" />
+                <Property Name="NGAYKHAM" Type="date" />
+                <Property Name="GIOKHAM" Type="time" Precision="7" />
+                <Property Name="CHUANDOAN" Type="nvarchar" MaxLength="300" />
+                <Property Name="KETLUAN" Type="nvarchar" MaxLength="300" />
+                <Property Name="THANHVIEN" Type="nvarchar" MaxLength="200" />
+                <Property Name="GHICHU" Type="nvarchar" MaxLength="200" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="PROC_ThemBenhNhan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="HOTENBENHNHAN" Type="nvarchar" Mode="In" />
+          <Parameter Name="CCCD" Type="varchar" Mode="In" />
+          <Parameter Name="SDT" Type="varchar" Mode="In" />
+          <Parameter Name="GIOITINH" Type="nvarchar" Mode="In" />
+          <Parameter Name="BACSI_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="TimBacSiTheoTen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ten" Type="nvarchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="BACSI_ID" Type="int" Nullable="false" />
+                <Property Name="MABACSI" Type="varchar" MaxLength="5" />
+                <Property Name="TENBACSI" Type="nvarchar" MaxLength="100" />
+                <Property Name="GIOITINH" Type="nvarchar" MaxLength="10" />
+                <Property Name="NAMSINH" Type="int" />
+                <Property Name="KHOA_ID" Type="int" />
+                <Property Name="SOBN" Type="int" />
+                <Property Name="HOCHAM" Type="nvarchar" MaxLength="20" />
+                <Property Name="HOCVI" Type="nvarchar" MaxLength="50" />
+                <Property Name="CHUCVU" Type="nvarchar" MaxLength="50" />
+                <Property Name="AVATAR" Type="nvarchar" MaxLength="200" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <EntityContainer Name="QL_BENHVIENModelStoreContainer">
+          <EntitySet Name="BACSI" EntityType="Self.BACSI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BENHNHAN" EntityType="Self.BENHNHAN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BENHVIEN" EntityType="Self.BENHVIEN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAKHAM_MAPPING" EntityType="Self.CAKHAM_MAPPING" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CHITIETHOADON" EntityType="Self.CHITIETHOADON" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DATLICHKHAM" EntityType="Self.DATLICHKHAM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DICHVU" EntityType="Self.DICHVU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HOADON" EntityType="Self.HOADON" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KETQUAKHAM" EntityType="Self.KETQUAKHAM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KHOA" EntityType="Self.KHOA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BACSI__KHOA_ID__4E88ABD4" Association="Self.FK__BACSI__KHOA_ID__4E88ABD4">
+            <End Role="KHOA" EntitySet="KHOA" />
+            <End Role="BACSI" EntitySet="BACSI" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BENHNHAN__BACSI___52593CB8" Association="Self.FK__BENHNHAN__BACSI___52593CB8">
+            <End Role="BACSI" EntitySet="BACSI" />
+            <End Role="BENHNHAN" EntitySet="BENHNHAN" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CHITIETHO__DICHV__6383C8BA" Association="Self.FK__CHITIETHO__DICHV__6383C8BA">
+            <End Role="DICHVU" EntitySet="DICHVU" />
+            <End Role="CHITIETHOADON" EntitySet="CHITIETHOADON" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CHITIETHO__HOADO__628FA481" Association="Self.FK__CHITIETHO__HOADO__628FA481">
+            <End Role="HOADON" EntitySet="HOADON" />
+            <End Role="CHITIETHOADON" EntitySet="CHITIETHOADON" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DATLICHKH__BACSI__5BE2A6F2" Association="Self.FK__DATLICHKH__BACSI__5BE2A6F2">
+            <End Role="BACSI" EntitySet="BACSI" />
+            <End Role="DATLICHKHAM" EntitySet="DATLICHKHAM" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DATLICHKH__BNHAN__5AEE82B9" Association="Self.FK__DATLICHKH__BNHAN__5AEE82B9">
+            <End Role="BENHNHAN" EntitySet="BENHNHAN" />
+            <End Role="DATLICHKHAM" EntitySet="DATLICHKHAM" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DATLICHKH__CAKHA__5CD6CB2B" Association="Self.FK__DATLICHKH__CAKHA__5CD6CB2B">
+            <End Role="CAKHAM_MAPPING" EntitySet="CAKHAM_MAPPING" />
+            <End Role="DATLICHKHAM" EntitySet="DATLICHKHAM" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DICHVU__KHOA_ID__5535A963" Association="Self.FK__DICHVU__KHOA_ID__5535A963">
+            <End Role="KHOA" EntitySet="KHOA" />
+            <End Role="DICHVU" EntitySet="DICHVU" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HOADON__DATLICHK__5FB337D6" Association="Self.FK__HOADON__DATLICHK__5FB337D6">
+            <End Role="DATLICHKHAM" EntitySet="DATLICHKHAM" />
+            <End Role="HOADON" EntitySet="HOADON" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KETQUAKHA__DATLI__66603565" Association="Self.FK__KETQUAKHA__DATLI__66603565">
+            <End Role="DATLICHKHAM" EntitySet="DATLICHKHAM" />
+            <End Role="KETQUAKHAM" EntitySet="KETQUAKHAM" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KHOA__BENHVIEN_I__4BAC3F29" Association="Self.FK__KHOA__BENHVIEN_I__4BAC3F29">
+            <End Role="BENHVIEN" EntitySet="BENHVIEN" />
+            <End Role="KHOA" EntitySet="KHOA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QL_BENHVIENModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BACSI">
+          <Key>
+            <PropertyRef Name="BACSI_ID" />
+          </Key>
+          <Property Name="BACSI_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MABACSI" Type="String" MaxLength="5" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="TENBACSI" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GIOITINH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="NAMSINH" Type="Int32" />
+          <Property Name="KHOA_ID" Type="Int32" />
+          <Property Name="SOBN" Type="Int32" />
+          <Property Name="HOCHAM" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="HOCVI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CHUCVU" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AVATAR" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="KHOA" Relationship="Self.FK__BACSI__KHOA_ID__4E88ABD4" FromRole="BACSI" ToRole="KHOA" />
+          <NavigationProperty Name="BENHNHANs" Relationship="Self.FK__BENHNHAN__BACSI___52593CB8" FromRole="BACSI" ToRole="BENHNHAN" />
+          <NavigationProperty Name="DATLICHKHAMs" Relationship="Self.FK__DATLICHKH__BACSI__5BE2A6F2" FromRole="BACSI" ToRole="DATLICHKHAM" />
+        </EntityType>
+        <EntityType Name="BENHNHAN">
+          <Key>
+            <PropertyRef Name="BNHAN_ID" />
+          </Key>
+          <Property Name="BNHAN_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MABENHNHAN" Type="String" MaxLength="5" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="HOTENBENHNHAN" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SDT" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="GIOITINH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="BACSI_ID" Type="Int32" />
+          <Property Name="AVATAR" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CCCD" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BACSI" Relationship="Self.FK__BENHNHAN__BACSI___52593CB8" FromRole="BENHNHAN" ToRole="BACSI" />
+          <NavigationProperty Name="DATLICHKHAMs" Relationship="Self.FK__DATLICHKH__BNHAN__5AEE82B9" FromRole="BENHNHAN" ToRole="DATLICHKHAM" />
+        </EntityType>
+        <EntityType Name="BENHVIEN">
+          <Key>
+            <PropertyRef Name="BENHVIEN_ID" />
+          </Key>
+          <Property Name="BENHVIEN_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MABENHVIEN" Type="String" MaxLength="5" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="TENBENHVIEN" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SDT" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DIACHI" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="KHOAs" Relationship="Self.FK__KHOA__BENHVIEN_I__4BAC3F29" FromRole="BENHVIEN" ToRole="KHOA" />
+        </EntityType>
+        <EntityType Name="CAKHAM_MAPPING">
+          <Key>
+            <PropertyRef Name="CAKHAM_ID" />
+          </Key>
+          <Property Name="CAKHAM_ID" Type="Int32" Nullable="false" />
+          <Property Name="GIOKHAM" Type="Time" Precision="7" />
+          <NavigationProperty Name="DATLICHKHAMs" Relationship="Self.FK__DATLICHKH__CAKHA__5CD6CB2B" FromRole="CAKHAM_MAPPING" ToRole="DATLICHKHAM" />
+        </EntityType>
+        <EntityType Name="CHITIETHOADON">
+          <Key>
+            <PropertyRef Name="CTHD_ID" />
+          </Key>
+          <Property Name="CTHD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HOADON_ID" Type="Int32" />
+          <Property Name="DICHVU_ID" Type="Int32" />
+          <Property Name="SOLUONG" Type="Int32" />
+          <Property Name="THANHTIEN" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="DICHVU" Relationship="Self.FK__CHITIETHO__DICHV__6383C8BA" FromRole="CHITIETHOADON" ToRole="DICHVU" />
+          <NavigationProperty Name="HOADON" Relationship="Self.FK__CHITIETHO__HOADO__628FA481" FromRole="CHITIETHOADON" ToRole="HOADON" />
+        </EntityType>
+        <EntityType Name="DATLICHKHAM">
+          <Key>
+            <PropertyRef Name="DATLICHKHAM_ID" />
+          </Key>
+          <Property Name="DATLICHKHAM_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BNHAN_ID" Type="Int32" />
+          <Property Name="BACSI_ID" Type="Int32" />
+          <Property Name="NGAYKHAM" Type="DateTime" Precision="0" />
+          <Property Name="CAKHAM_ID" Type="Int32" />
+          <Property Name="TRANGTHAI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="THOIGIANDAT" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="BACSI" Relationship="Self.FK__DATLICHKH__BACSI__5BE2A6F2" FromRole="DATLICHKHAM" ToRole="BACSI" />
+          <NavigationProperty Name="BENHNHAN" Relationship="Self.FK__DATLICHKH__BNHAN__5AEE82B9" FromRole="DATLICHKHAM" ToRole="BENHNHAN" />
+          <NavigationProperty Name="CAKHAM_MAPPING" Relationship="Self.FK__DATLICHKH__CAKHA__5CD6CB2B" FromRole="DATLICHKHAM" ToRole="CAKHAM_MAPPING" />
+          <NavigationProperty Name="HOADONs" Relationship="Self.FK__HOADON__DATLICHK__5FB337D6" FromRole="DATLICHKHAM" ToRole="HOADON" />
+          <NavigationProperty Name="KETQUAKHAMs" Relationship="Self.FK__KETQUAKHA__DATLI__66603565" FromRole="DATLICHKHAM" ToRole="KETQUAKHAM" />
+        </EntityType>
+        <EntityType Name="DICHVU">
+          <Key>
+            <PropertyRef Name="DV_ID" />
+          </Key>
+          <Property Name="DV_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MADV" Type="String" MaxLength="5" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="TENDV" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DONGIA" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="GHICHU" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="KHOA_ID" Type="Int32" />
+          <NavigationProperty Name="CHITIETHOADONs" Relationship="Self.FK__CHITIETHO__DICHV__6383C8BA" FromRole="DICHVU" ToRole="CHITIETHOADON" />
+          <NavigationProperty Name="KHOA" Relationship="Self.FK__DICHVU__KHOA_ID__5535A963" FromRole="DICHVU" ToRole="KHOA" />
+        </EntityType>
+        <EntityType Name="HOADON">
+          <Key>
+            <PropertyRef Name="HD_ID" />
+          </Key>
+          <Property Name="HD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MAHD" Type="String" MaxLength="5" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DATLICHKHAM_ID" Type="Int32" />
+          <Property Name="NGAYLAP" Type="DateTime" Precision="0" />
+          <Property Name="TONGTIEN" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="HINHTHUCTHANHTOAN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GHICHU" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CHITIETHOADONs" Relationship="Self.FK__CHITIETHO__HOADO__628FA481" FromRole="HOADON" ToRole="CHITIETHOADON" />
+          <NavigationProperty Name="DATLICHKHAM" Relationship="Self.FK__HOADON__DATLICHK__5FB337D6" FromRole="HOADON" ToRole="DATLICHKHAM" />
+        </EntityType>
+        <EntityType Name="KETQUAKHAM">
+          <Key>
+            <PropertyRef Name="KQ_ID" />
+          </Key>
+          <Property Name="KQ_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MAKQ" Type="String" MaxLength="5" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="DATLICHKHAM_ID" Type="Int32" />
+          <Property Name="CHUANDOAN" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="KETLUAN" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="THANHVIEN" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="GHICHU" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DATLICHKHAM" Relationship="Self.FK__KETQUAKHA__DATLI__66603565" FromRole="KETQUAKHAM" ToRole="DATLICHKHAM" />
+        </EntityType>
+        <EntityType Name="KHOA">
+          <Key>
+            <PropertyRef Name="KHOA_ID" />
+          </Key>
+          <Property Name="KHOA_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MAKHOA" Type="String" MaxLength="4" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="TENKHOA" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BENHVIEN_ID" Type="Int32" />
+          <Property Name="SOBS" Type="Int32" />
+          <NavigationProperty Name="BACSIs" Relationship="Self.FK__BACSI__KHOA_ID__4E88ABD4" FromRole="KHOA" ToRole="BACSI" />
+          <NavigationProperty Name="BENHVIEN" Relationship="Self.FK__KHOA__BENHVIEN_I__4BAC3F29" FromRole="KHOA" ToRole="BENHVIEN" />
+          <NavigationProperty Name="DICHVUs" Relationship="Self.FK__DICHVU__KHOA_ID__5535A963" FromRole="KHOA" ToRole="DICHVU" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK__BACSI__KHOA_ID__4E88ABD4">
+          <End Role="KHOA" Type="Self.KHOA" Multiplicity="0..1" />
+          <End Role="BACSI" Type="Self.BACSI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHOA">
+              <PropertyRef Name="KHOA_ID" />
+            </Principal>
+            <Dependent Role="BACSI">
+              <PropertyRef Name="KHOA_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BENHNHAN__BACSI___52593CB8">
+          <End Role="BACSI" Type="Self.BACSI" Multiplicity="0..1" />
+          <End Role="BENHNHAN" Type="Self.BENHNHAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BACSI">
+              <PropertyRef Name="BACSI_ID" />
+            </Principal>
+            <Dependent Role="BENHNHAN">
+              <PropertyRef Name="BACSI_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DATLICHKH__BACSI__5BE2A6F2">
+          <End Role="BACSI" Type="Self.BACSI" Multiplicity="0..1" />
+          <End Role="DATLICHKHAM" Type="Self.DATLICHKHAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BACSI">
+              <PropertyRef Name="BACSI_ID" />
+            </Principal>
+            <Dependent Role="DATLICHKHAM">
+              <PropertyRef Name="BACSI_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DATLICHKH__BNHAN__5AEE82B9">
+          <End Role="BENHNHAN" Type="Self.BENHNHAN" Multiplicity="0..1" />
+          <End Role="DATLICHKHAM" Type="Self.DATLICHKHAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BENHNHAN">
+              <PropertyRef Name="BNHAN_ID" />
+            </Principal>
+            <Dependent Role="DATLICHKHAM">
+              <PropertyRef Name="BNHAN_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KHOA__BENHVIEN_I__4BAC3F29">
+          <End Role="BENHVIEN" Type="Self.BENHVIEN" Multiplicity="0..1" />
+          <End Role="KHOA" Type="Self.KHOA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BENHVIEN">
+              <PropertyRef Name="BENHVIEN_ID" />
+            </Principal>
+            <Dependent Role="KHOA">
+              <PropertyRef Name="BENHVIEN_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DATLICHKH__CAKHA__5CD6CB2B">
+          <End Role="CAKHAM_MAPPING" Type="Self.CAKHAM_MAPPING" Multiplicity="0..1" />
+          <End Role="DATLICHKHAM" Type="Self.DATLICHKHAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAKHAM_MAPPING">
+              <PropertyRef Name="CAKHAM_ID" />
+            </Principal>
+            <Dependent Role="DATLICHKHAM">
+              <PropertyRef Name="CAKHAM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CHITIETHO__DICHV__6383C8BA">
+          <End Role="DICHVU" Type="Self.DICHVU" Multiplicity="0..1" />
+          <End Role="CHITIETHOADON" Type="Self.CHITIETHOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DICHVU">
+              <PropertyRef Name="DV_ID" />
+            </Principal>
+            <Dependent Role="CHITIETHOADON">
+              <PropertyRef Name="DICHVU_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CHITIETHO__HOADO__628FA481">
+          <End Role="HOADON" Type="Self.HOADON" Multiplicity="0..1" />
+          <End Role="CHITIETHOADON" Type="Self.CHITIETHOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HOADON">
+              <PropertyRef Name="HD_ID" />
+            </Principal>
+            <Dependent Role="CHITIETHOADON">
+              <PropertyRef Name="HOADON_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HOADON__DATLICHK__5FB337D6">
+          <End Role="DATLICHKHAM" Type="Self.DATLICHKHAM" Multiplicity="0..1" />
+          <End Role="HOADON" Type="Self.HOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DATLICHKHAM">
+              <PropertyRef Name="DATLICHKHAM_ID" />
+            </Principal>
+            <Dependent Role="HOADON">
+              <PropertyRef Name="DATLICHKHAM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KETQUAKHA__DATLI__66603565">
+          <End Role="DATLICHKHAM" Type="Self.DATLICHKHAM" Multiplicity="0..1" />
+          <End Role="KETQUAKHAM" Type="Self.KETQUAKHAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DATLICHKHAM">
+              <PropertyRef Name="DATLICHKHAM_ID" />
+            </Principal>
+            <Dependent Role="KETQUAKHAM">
+              <PropertyRef Name="DATLICHKHAM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DICHVU__KHOA_ID__5535A963">
+          <End Role="KHOA" Type="Self.KHOA" Multiplicity="0..1" />
+          <End Role="DICHVU" Type="Self.DICHVU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHOA">
+              <PropertyRef Name="KHOA_ID" />
+            </Principal>
+            <Dependent Role="DICHVU">
+              <PropertyRef Name="KHOA_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QL_BENHVIENEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BACSIs" EntityType="Self.BACSI" />
+          <EntitySet Name="BENHNHANs" EntityType="Self.BENHNHAN" />
+          <EntitySet Name="BENHVIENs" EntityType="Self.BENHVIEN" />
+          <EntitySet Name="CAKHAM_MAPPING" EntityType="Self.CAKHAM_MAPPING" />
+          <EntitySet Name="CHITIETHOADONs" EntityType="Self.CHITIETHOADON" />
+          <EntitySet Name="DATLICHKHAMs" EntityType="Self.DATLICHKHAM" />
+          <EntitySet Name="DICHVUs" EntityType="Self.DICHVU" />
+          <EntitySet Name="HOADONs" EntityType="Self.HOADON" />
+          <EntitySet Name="KETQUAKHAMs" EntityType="Self.KETQUAKHAM" />
+          <EntitySet Name="KHOAs" EntityType="Self.KHOA" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK__BACSI__KHOA_ID__4E88ABD4" Association="Self.FK__BACSI__KHOA_ID__4E88ABD4">
+            <End Role="KHOA" EntitySet="KHOAs" />
+            <End Role="BACSI" EntitySet="BACSIs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BENHNHAN__BACSI___52593CB8" Association="Self.FK__BENHNHAN__BACSI___52593CB8">
+            <End Role="BACSI" EntitySet="BACSIs" />
+            <End Role="BENHNHAN" EntitySet="BENHNHANs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DATLICHKH__BACSI__5BE2A6F2" Association="Self.FK__DATLICHKH__BACSI__5BE2A6F2">
+            <End Role="BACSI" EntitySet="BACSIs" />
+            <End Role="DATLICHKHAM" EntitySet="DATLICHKHAMs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DATLICHKH__BNHAN__5AEE82B9" Association="Self.FK__DATLICHKH__BNHAN__5AEE82B9">
+            <End Role="BENHNHAN" EntitySet="BENHNHANs" />
+            <End Role="DATLICHKHAM" EntitySet="DATLICHKHAMs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KHOA__BENHVIEN_I__4BAC3F29" Association="Self.FK__KHOA__BENHVIEN_I__4BAC3F29">
+            <End Role="BENHVIEN" EntitySet="BENHVIENs" />
+            <End Role="KHOA" EntitySet="KHOAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DATLICHKH__CAKHA__5CD6CB2B" Association="Self.FK__DATLICHKH__CAKHA__5CD6CB2B">
+            <End Role="CAKHAM_MAPPING" EntitySet="CAKHAM_MAPPING" />
+            <End Role="DATLICHKHAM" EntitySet="DATLICHKHAMs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CHITIETHO__DICHV__6383C8BA" Association="Self.FK__CHITIETHO__DICHV__6383C8BA">
+            <End Role="DICHVU" EntitySet="DICHVUs" />
+            <End Role="CHITIETHOADON" EntitySet="CHITIETHOADONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CHITIETHO__HOADO__628FA481" Association="Self.FK__CHITIETHO__HOADO__628FA481">
+            <End Role="HOADON" EntitySet="HOADONs" />
+            <End Role="CHITIETHOADON" EntitySet="CHITIETHOADONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HOADON__DATLICHK__5FB337D6" Association="Self.FK__HOADON__DATLICHK__5FB337D6">
+            <End Role="DATLICHKHAM" EntitySet="DATLICHKHAMs" />
+            <End Role="HOADON" EntitySet="HOADONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KETQUAKHA__DATLI__66603565" Association="Self.FK__KETQUAKHA__DATLI__66603565">
+            <End Role="DATLICHKHAM" EntitySet="DATLICHKHAMs" />
+            <End Role="KETQUAKHAM" EntitySet="KETQUAKHAMs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DICHVU__KHOA_ID__5535A963" Association="Self.FK__DICHVU__KHOA_ID__5535A963">
+            <End Role="KHOA" EntitySet="KHOAs" />
+            <End Role="DICHVU" EntitySet="DICHVUs" />
+          </AssociationSet>
+          <FunctionImport Name="PROC_ThemBenhNhan">
+            <Parameter Name="HOTENBENHNHAN" Mode="In" Type="String" />
+            <Parameter Name="CCCD" Mode="In" Type="String" />
+            <Parameter Name="SDT" Mode="In" Type="String" />
+            <Parameter Name="GIOITINH" Mode="In" Type="String" />
+            <Parameter Name="BACSI_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(QL_BENHVIENModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(QL_BENHVIENModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="FN_TimKiemKhoa" IsComposable="true" ReturnType="Collection(QL_BENHVIENModel.FN_TimKiemKhoa_Result)">
+          <Parameter Name="TENKHOA" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="FN_XuatKetQuaDaKham_TheoBN" IsComposable="true" ReturnType="Collection(QL_BENHVIENModel.FN_XuatKetQuaDaKham_TheoBN_Result)">
+            <Parameter Name="MABN" Mode="In" Type="String" />
+            <Parameter Name="CCCD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="TimBacSiTheoTen" IsComposable="true" ReturnType="Collection(QL_BENHVIENModel.TimBacSiTheoTen_Result)">
+          <Parameter Name="ten" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="FN_TimKiemKhoa_Result">
+          <Property Type="String" Name="MAKHOA" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="TENKHOA" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="SOBS" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="FN_XuatKetQuaDaKham_TheoBN_Result">
+          <Property Type="String" Name="MAKQ" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="MABENHNHAN" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="HOTENBENHNHAN" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="GIOITINH" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="SDT" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="MABACSI" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="TENBACSI" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="TENKHOA" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="NGAYKHAM" Nullable="true" Precision="10" />
+          <Property Type="Time" Name="GIOKHAM" Nullable="true" />
+          <Property Type="String" Name="CHUANDOAN" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="KETLUAN" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="THANHVIEN" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="GHICHU" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="TimBacSiTheoTen_Result">
+          <Property Type="Int32" Name="BACSI_ID" Nullable="false" />
+          <Property Type="String" Name="MABACSI" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="TENBACSI" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="GIOITINH" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="NAMSINH" Nullable="true" />
+          <Property Type="Int32" Name="KHOA_ID" Nullable="true" />
+          <Property Type="Int32" Name="SOBN" Nullable="true" />
+          <Property Type="String" Name="HOCHAM" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="HOCVI" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CHUCVU" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AVATAR" Nullable="true" MaxLength="200" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QL_BENHVIENModelStoreContainer" CdmEntityContainer="QL_BENHVIENEntities">
+          <EntitySetMapping Name="BACSIs">
+            <EntityTypeMapping TypeName="QL_BENHVIENModel.BACSI">
+              <MappingFragment StoreEntitySet="BACSI">
+                <ScalarProperty Name="BACSI_ID" ColumnName="BACSI_ID" />
+                <ScalarProperty Name="MABACSI" ColumnName="MABACSI" />
+                <ScalarProperty Name="TENBACSI" ColumnName="TENBACSI" />
+                <ScalarProperty Name="GIOITINH" ColumnName="GIOITINH" />
+                <ScalarProperty Name="NAMSINH" ColumnName="NAMSINH" />
+                <ScalarProperty Name="KHOA_ID" ColumnName="KHOA_ID" />
+                <ScalarProperty Name="SOBN" ColumnName="SOBN" />
+                <ScalarProperty Name="HOCHAM" ColumnName="HOCHAM" />
+                <ScalarProperty Name="HOCVI" ColumnName="HOCVI" />
+                <ScalarProperty Name="CHUCVU" ColumnName="CHUCVU" />
+                <ScalarProperty Name="AVATAR" ColumnName="AVATAR" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BENHNHANs">
+            <EntityTypeMapping TypeName="QL_BENHVIENModel.BENHNHAN">
+              <MappingFragment StoreEntitySet="BENHNHAN">
+                <ScalarProperty Name="BNHAN_ID" ColumnName="BNHAN_ID" />
+                <ScalarProperty Name="MABENHNHAN" ColumnName="MABENHNHAN" />
+                <ScalarProperty Name="HOTENBENHNHAN" ColumnName="HOTENBENHNHAN" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="GIOITINH" ColumnName="GIOITINH" />
+                <ScalarProperty Name="BACSI_ID" ColumnName="BACSI_ID" />
+                <ScalarProperty Name="AVATAR" ColumnName="AVATAR" />
+                <ScalarProperty Name="CCCD" ColumnName="CCCD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BENHVIENs">
+            <EntityTypeMapping TypeName="QL_BENHVIENModel.BENHVIEN">
+              <MappingFragment StoreEntitySet="BENHVIEN">
+                <ScalarProperty Name="BENHVIEN_ID" ColumnName="BENHVIEN_ID" />
+                <ScalarProperty Name="MABENHVIEN" ColumnName="MABENHVIEN" />
+                <ScalarProperty Name="TENBENHVIEN" ColumnName="TENBENHVIEN" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="DIACHI" ColumnName="DIACHI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAKHAM_MAPPING">
+            <EntityTypeMapping TypeName="QL_BENHVIENModel.CAKHAM_MAPPING">
+              <MappingFragment StoreEntitySet="CAKHAM_MAPPING">
+                <ScalarProperty Name="CAKHAM_ID" ColumnName="CAKHAM_ID" />
+                <ScalarProperty Name="GIOKHAM" ColumnName="GIOKHAM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CHITIETHOADONs">
+            <EntityTypeMapping TypeName="QL_BENHVIENModel.CHITIETHOADON">
+              <MappingFragment StoreEntitySet="CHITIETHOADON">
+                <ScalarProperty Name="CTHD_ID" ColumnName="CTHD_ID" />
+                <ScalarProperty Name="HOADON_ID" ColumnName="HOADON_ID" />
+                <ScalarProperty Name="DICHVU_ID" ColumnName="DICHVU_ID" />
+                <ScalarProperty Name="SOLUONG" ColumnName="SOLUONG" />
+                <ScalarProperty Name="THANHTIEN" ColumnName="THANHTIEN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DATLICHKHAMs">
+            <EntityTypeMapping TypeName="QL_BENHVIENModel.DATLICHKHAM">
+              <MappingFragment StoreEntitySet="DATLICHKHAM">
+                <ScalarProperty Name="DATLICHKHAM_ID" ColumnName="DATLICHKHAM_ID" />
+                <ScalarProperty Name="BNHAN_ID" ColumnName="BNHAN_ID" />
+                <ScalarProperty Name="BACSI_ID" ColumnName="BACSI_ID" />
+                <ScalarProperty Name="NGAYKHAM" ColumnName="NGAYKHAM" />
+                <ScalarProperty Name="CAKHAM_ID" ColumnName="CAKHAM_ID" />
+                <ScalarProperty Name="TRANGTHAI" ColumnName="TRANGTHAI" />
+                <ScalarProperty Name="THOIGIANDAT" ColumnName="THOIGIANDAT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DICHVUs">
+            <EntityTypeMapping TypeName="QL_BENHVIENModel.DICHVU">
+              <MappingFragment StoreEntitySet="DICHVU">
+                <ScalarProperty Name="DV_ID" ColumnName="DV_ID" />
+                <ScalarProperty Name="MADV" ColumnName="MADV" />
+                <ScalarProperty Name="TENDV" ColumnName="TENDV" />
+                <ScalarProperty Name="DONGIA" ColumnName="DONGIA" />
+                <ScalarProperty Name="GHICHU" ColumnName="GHICHU" />
+                <ScalarProperty Name="KHOA_ID" ColumnName="KHOA_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HOADONs">
+            <EntityTypeMapping TypeName="QL_BENHVIENModel.HOADON">
+              <MappingFragment StoreEntitySet="HOADON">
+                <ScalarProperty Name="HD_ID" ColumnName="HD_ID" />
+                <ScalarProperty Name="MAHD" ColumnName="MAHD" />
+                <ScalarProperty Name="DATLICHKHAM_ID" ColumnName="DATLICHKHAM_ID" />
+                <ScalarProperty Name="NGAYLAP" ColumnName="NGAYLAP" />
+                <ScalarProperty Name="TONGTIEN" ColumnName="TONGTIEN" />
+                <ScalarProperty Name="HINHTHUCTHANHTOAN" ColumnName="HINHTHUCTHANHTOAN" />
+                <ScalarProperty Name="GHICHU" ColumnName="GHICHU" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KETQUAKHAMs">
+            <EntityTypeMapping TypeName="QL_BENHVIENModel.KETQUAKHAM">
+              <MappingFragment StoreEntitySet="KETQUAKHAM">
+                <ScalarProperty Name="KQ_ID" ColumnName="KQ_ID" />
+                <ScalarProperty Name="MAKQ" ColumnName="MAKQ" />
+                <ScalarProperty Name="DATLICHKHAM_ID" ColumnName="DATLICHKHAM_ID" />
+                <ScalarProperty Name="CHUANDOAN" ColumnName="CHUANDOAN" />
+                <ScalarProperty Name="KETLUAN" ColumnName="KETLUAN" />
+                <ScalarProperty Name="THANHVIEN" ColumnName="THANHVIEN" />
+                <ScalarProperty Name="GHICHU" ColumnName="GHICHU" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KHOAs">
+            <EntityTypeMapping TypeName="QL_BENHVIENModel.KHOA">
+              <MappingFragment StoreEntitySet="KHOA">
+                <ScalarProperty Name="KHOA_ID" ColumnName="KHOA_ID" />
+                <ScalarProperty Name="MAKHOA" ColumnName="MAKHOA" />
+                <ScalarProperty Name="TENKHOA" ColumnName="TENKHOA" />
+                <ScalarProperty Name="BENHVIEN_ID" ColumnName="BENHVIEN_ID" />
+                <ScalarProperty Name="SOBS" ColumnName="SOBS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="QL_BENHVIENModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PROC_ThemBenhNhan" FunctionName="QL_BENHVIENModel.Store.PROC_ThemBenhNhan" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="QL_BENHVIENModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="QL_BENHVIENModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="QL_BENHVIENModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="QL_BENHVIENModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QL_BENHVIENModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="QL_BENHVIENModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QL_BENHVIENModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="QL_BENHVIENModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="QL_BENHVIENModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="FN_TimKiemKhoa" FunctionName="QL_BENHVIENModel.Store.FN_TimKiemKhoa">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QL_BENHVIENModel.FN_TimKiemKhoa_Result">
+                <ScalarProperty Name="MAKHOA" ColumnName="MAKHOA" />
+                <ScalarProperty Name="TENKHOA" ColumnName="TENKHOA" />
+                <ScalarProperty Name="SOBS" ColumnName="SOBS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FN_XuatKetQuaDaKham_TheoBN" FunctionName="QL_BENHVIENModel.Store.FN_XuatKetQuaDaKham_TheoBN">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QL_BENHVIENModel.FN_XuatKetQuaDaKham_TheoBN_Result">
+                <ScalarProperty Name="MAKQ" ColumnName="MAKQ" />
+                <ScalarProperty Name="MABENHNHAN" ColumnName="MABENHNHAN" />
+                <ScalarProperty Name="HOTENBENHNHAN" ColumnName="HOTENBENHNHAN" />
+                <ScalarProperty Name="GIOITINH" ColumnName="GIOITINH" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="MABACSI" ColumnName="MABACSI" />
+                <ScalarProperty Name="TENBACSI" ColumnName="TENBACSI" />
+                <ScalarProperty Name="TENKHOA" ColumnName="TENKHOA" />
+                <ScalarProperty Name="NGAYKHAM" ColumnName="NGAYKHAM" />
+                <ScalarProperty Name="GIOKHAM" ColumnName="GIOKHAM" />
+                <ScalarProperty Name="CHUANDOAN" ColumnName="CHUANDOAN" />
+                <ScalarProperty Name="KETLUAN" ColumnName="KETLUAN" />
+                <ScalarProperty Name="THANHVIEN" ColumnName="THANHVIEN" />
+                <ScalarProperty Name="GHICHU" ColumnName="GHICHU" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="TimBacSiTheoTen" FunctionName="QL_BENHVIENModel.Store.TimBacSiTheoTen">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="QL_BENHVIENModel.TimBacSiTheoTen_Result">
+                <ScalarProperty Name="BACSI_ID" ColumnName="BACSI_ID" />
+                <ScalarProperty Name="MABACSI" ColumnName="MABACSI" />
+                <ScalarProperty Name="TENBACSI" ColumnName="TENBACSI" />
+                <ScalarProperty Name="GIOITINH" ColumnName="GIOITINH" />
+                <ScalarProperty Name="NAMSINH" ColumnName="NAMSINH" />
+                <ScalarProperty Name="KHOA_ID" ColumnName="KHOA_ID" />
+                <ScalarProperty Name="SOBN" ColumnName="SOBN" />
+                <ScalarProperty Name="HOCHAM" ColumnName="HOCHAM" />
+                <ScalarProperty Name="HOCVI" ColumnName="HOCVI" />
+                <ScalarProperty Name="CHUCVU" ColumnName="CHUCVU" />
+                <ScalarProperty Name="AVATAR" ColumnName="AVATAR" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

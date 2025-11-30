@@ -1,0 +1,463 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Bệnh viện Đa khoa</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --primary-color: #0066b2;
+            --secondary-color: #00a651;
+            --text-dark: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-dark);
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+            .top-bar a {
+                color: white;
+                text-decoration: none;
+                margin: 0 10px;
+            }
+
+        /* Header */
+        .main-header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-section {
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .hotline-btn {
+            background: var(--secondary-color);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+            .hotline-btn:hover {
+                background: #008f45;
+                color: white;
+            }
+
+        /* Navigation */
+        .navbar {
+            padding: 0;
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--text-dark);
+            padding: 15px 20px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+            .navbar-nav .nav-link:hover {
+                color: var(--primary-color);
+                background-color: #f8f9fa;
+            }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), #0099cc);
+            color: white;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .hero-section::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 50%;
+                height: 100%;
+                background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><path d="M0,300 Q300,100 600,300 T1200,300 L1200,600 L0,600 Z" fill="rgba(255,255,255,0.1)"/></svg>') no-repeat center;
+                background-size: cover;
+            }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Service Cards */
+        .service-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+        }
+
+            .service-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 30px;
+            color: white;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 60px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* Doctor Card */
+        .doctor-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+            .doctor-card:hover {
+                transform: translateY(-5px);
+            }
+
+        .doctor-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        /* News Card */
+        .news-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+            .news-card:hover {
+                box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            }
+
+        .news-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: #ccc;
+            padding: 60px 0 20px;
+        }
+
+            .footer h5 {
+                color: white;
+                margin-bottom: 20px;
+                font-weight: 600;
+            }
+
+            .footer ul {
+                list-style: none;
+                padding: 0;
+            }
+
+                .footer ul li {
+                    margin-bottom: 10px;
+                }
+
+            .footer a {
+                color: #ccc;
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+
+                .footer a:hover {
+                    color: var(--secondary-color);
+                }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            margin-top: 40px;
+            padding-top: 20px;
+            text-align: center;
+        }
+
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+            .section-title h2 {
+                font-size: 36px;
+                font-weight: bold;
+                color: var(--primary-color);
+                margin-bottom: 15px;
+            }
+
+            .section-title p {
+                color: #666;
+                font-size: 18px;
+            }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-4 col-md-4">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    <a href="#">Hà Nội: 108 Hoàng Quốc Việt</a>
+                </div>
+                <div class="col-lg-8 col-md-8 text-end">
+                    <a href="@Url.Action("Index", "Home")">
+                        <i class="bi bi-people-fill"></i> Dành cho khách hàng
+                    </a>
+                    <span class="mx-2">|</span>
+                    <a href="#">
+                        <i class="bi bi-question-circle-fill"></i> Hỏi đáp
+                    </a>
+                    <span class="mx-2">|</span>
+                    <a href="@Url.Action("Index", "Home")" class="text-warning fw-bold">
+                        <i class="bi bi-calendar-check-fill"></i> Đặt lịch khám
+                    </a>
+                    <a href="@Url.Action("Login", "Login")">
+                        <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="logo-section d-flex justify-content-between align-items-center">
+                <a href="@Url.Action("Index", "Home")" class="logo">
+                    <i class="bi bi-hospital"></i> BỆNH VIỆN ĐA KHOA TÂM ANH
+                </a>
+                <div>
+                    <a href="tel:02473098888" class="hotline-btn">
+                        <i class="bi bi-telephone-fill"></i> Hotline: 024 3309 8888
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                 Giới thiệu
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Về bệnh viện</a></li>
+                                <li><a class="dropdown-item" href="#">Tầm nhìn - Sứ mệnh</a></li>
+                                <li><a class="dropdown-item" href="#">Cơ cấu tổ chức</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("ChuyenKhoa", "Home")">
+                                Chuyên khoa
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("ChuyenGia", "Home")">
+                                Chuyên gia - Bác sĩ
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("DichVu", "Home")">
+                                Dịch vụ đặc biệt
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                 Tiện nghi
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Phòng bệnh VIP</a></li>
+                                <li><a class="dropdown-item" href="#">Phòng mổ hiện đại</a></li>
+                                <li><a class="dropdown-item" href="#">Hệ thống máy móc</a></li>
+                                <li><a class="dropdown-item" href="#">Dịch vụ tiện ích</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                 Thành tựu
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Giải thưởng</a></li>
+                                <li><a class="dropdown-item" href="#">Chứng nhận</a></li>
+                                <li><a class="dropdown-item" href="#">Ca bệnh tiêu biểu</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                 Tin tức
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Tin tức sự kiện</a></li>
+                                <li><a class="dropdown-item" href="#">Cẩm nang sức khỏe</a></li>
+                                <li><a class="dropdown-item" href="#">Video clip</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Contact", "Home")">
+                                 Liên hệ
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Search Form -->
+                    <form class="d-flex me-3" method="get" action="#">
+                        <div class="input-group">
+                            <input class="form-control" type="search" name="q" placeholder="Tìm kiếm..." aria-label="Search">
+                            <button class="btn btn-outline-primary" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5>Bệnh viện Đa khoa Tâm Anh</h5>
+                    <p>Hệ thống bệnh viện đa khoa hàng đầu Việt Nam, cung cấp dịch vụ y tế chất lượng cao với đội ngũ bác sĩ giàu kinh nghiệm và trang thiết bị hiện đại.</p>
+                    <div class="mt-3">
+                        <a href="#" class="me-3"><i class="bi bi-facebook fs-4"></i></a>
+                        <a href="#" class="me-3"><i class="bi bi-youtube fs-4"></i></a>
+                        <a href="#" class="me-3"><i class="bi bi-instagram fs-4"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Liên kết</h5>
+                    <ul>
+                        <li><a href="#">Giới thiệu</a></li>
+                        <li><a href="#">Chuyên khoa</a></li>
+                        <li><a href="#">Bác sĩ</a></li>
+                        <li><a href="#">Tin tức</a></li>
+                        <li><a href="#">Tuyển dụng</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Dịch vụ</h5>
+                    <ul>
+                        <li><a href="#">Khám tổng quát</a></li>
+                        <li><a href="#">Khám chuyên khoa</a></li>
+                        <li><a href="#">Xét nghiệm</a></li>
+                        <li><a href="#">Chẩn đoán hình ảnh</a></li>
+                        <li><a href="#">Gói khám sức khỏe</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Liên hệ</h5>
+                    <ul>
+                        <li>
+                            <i class="bi bi-geo-alt-fill"></i>
+                            Số 108, Đường Hoàng Quốc Việt, Cầu Giấy, Hà Nội
+                        </li>
+                        <li>
+                            <i class="bi bi-telephone-fill"></i>
+                            <a href="tel:02473098888">024 3309 8888</a>
+                        </li>
+                        <li>
+                            <i class="bi bi-envelope-fill"></i>
+                            <a href="mailto:info@hospital.vn">info@hospital.vn</a>
+                        </li>
+                        <li>
+                            <i class="bi bi-clock-fill"></i>
+                            24/7 - Cả ngày lễ và cuối tuần
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; @DateTime.Now.Year Bệnh viện Đa khoa. Bản quyền thuộc về Bệnh viện.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,23 @@
+﻿@model QLBV.Models.BACSI
+@{
+    Layout = "~/Views/Shared/_LayoutBacSi.cshtml"; // layout bạn vừa tạo
+    ViewBag.Title = "Trang chính bác sĩ";
+}
+
+<div class="container">
+    <h2 class="mb-4">Xin chào, @Model.TENBACSI</h2>
+
+    <div class="card shadow mb-3" style="border-radius:12px;">
+        <div class="card-body">
+            <p><b>Học vị:</b> @Model.HOCVI</p>
+            <p><b>Học hàm:</b> @Model.HOCHAM</p>
+            <p><b>Chức vụ:</b> @Model.CHUCVU</p>
+            <p><b>Khoa:</b> @Model.KHOA.TENKHOA</p>
+            <p><b>Số bệnh nhân đang khám:</b> @Model.SOBN</p>
+        </div>
+    </div>
+
+    <a href="@Url.Action("DanhSachBenhNhan", "BS", new { id = Model.BACSI_ID })" class="btn btn-primary">
+        Xem danh sách bệnh nhân
+    </a>
+</div>

@@ -1,0 +1,97 @@
+﻿@model QLBV.Models.BACSI
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+<h3>Bạn có muốn xóa bác sĩ này không?</h3>
+<div>
+    <h4>Bác Sĩ</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TENBACSI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TENBACSI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GIOITINH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GIOITINH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NAMSINH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NAMSINH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KHOA_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KHOA_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SOBN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SOBN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HOCHAM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HOCHAM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HOCVI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HOCVI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CHUCVU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CHUCVU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AVATAR)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AVATAR)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm("DeleteOnSubmit", "Admin", FormMethod.Post)) {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.MABACSI)
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

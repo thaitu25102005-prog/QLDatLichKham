@@ -1,0 +1,93 @@
+﻿@model IEnumerable<QLBV.Models.BACSI>
+
+@{
+
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<p>
+    @Html.ActionLink("Thêm bác sĩ mới", "CreateBS")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BACSI_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MABACSI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TENBACSI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GIOITINH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NAMSINH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KHOA_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SOBN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HOCHAM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HOCVI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CHUCVU)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AVATAR)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BACSI_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MABACSI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TENBACSI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GIOITINH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NAMSINH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KHOA_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SOBN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HOCHAM)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HOCVI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CHUCVU)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AVATAR)
+        </td>
+        <td>
+            @Html.ActionLink("Sửa thông tin bác sĩ", "EditBS", new { id = item.MABACSI }) |
+            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+            @Html.ActionLink("Xóa bác sĩ", "Delete", new { id = item.MABACSI })
+        </td>
+    </tr>
+}
+
+</table>

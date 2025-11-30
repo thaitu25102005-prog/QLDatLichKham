@@ -1,0 +1,83 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Bệnh viện</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            background: #003A91;
+            color: white;
+            min-height: 100vh;
+            padding-top: 20px;
+        }
+
+            .sidebar a {
+                color: white;
+                text-decoration: none;
+                display: block;
+                padding: 10px 20px;
+                margin-bottom: 5px;
+                border-radius: 5px;
+            }
+
+                .sidebar a:hover {
+                    background: #002061;
+                }
+
+            .sidebar .info {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+
+                .sidebar .info img {
+                    width: 100px;
+                    height: 100px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                    margin-bottom: 10px;
+                }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex">
+        <div class="sidebar">
+            @{
+                var bacsiId = Session["BacSiID"];
+                var bacsiName = Session["UserName"];
+                var bacsiAvatar = Session["BacSiAvatar"] ?? "/images/default-avatar.png";
+                var bacsiChucvu = Session["BacSiChucVu"];
+            }
+            <div class="info">
+                <img src="@bacsiAvatar" alt="@bacsiName" />
+                <h5>@bacsiName</h5>
+                <p>@bacsiChucvu</p>
+            </div>
+
+            <a href="@Url.Action("DanhSachBenhNhan", "BS", new { id = ViewBag.ID_BS })"><i class="fas fa-user-injured"></i> Bệnh nhân của tôi</a>
+            <a href="@Url.Action("Logout", "Login")"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+        </div>
+
+        <div class="content w-100">
+            @RenderBody()  <!-- Đây sẽ hiển thị Index -->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+﻿@model QLBV.Models.HOADON
+@{
+    Layout = "~/Views/Shared/_LayoutBacSi.cshtml";
+}
+
+<h2>Khám bệnh: @Model.DATLICHKHAM.BENHNHAN.HOTENBENHNHAN</h2>
+
+<h4>Dịch vụ khám</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Dịch vụ</th>
+            <th>Đơn giá</th>
+            <th style="width:200px;">Số lượng & Thêm</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dv in ViewBag.DichVus)
+        {
+            <tr>
+                <td>@dv.TENDV</td>
+                <td>@dv.DONGIA.ToString("N0")</td>
+                <td>
+                    <form action="@Url.Action("ThemDichVu", "BS")" method="post" class="d-flex align-items-center">
+                        <input type="hidden" name="HD_ID" value="@Model.HD_ID" />
+                        <input type="hidden" name="DICHVU_ID" value="@dv.DV_ID" />
+                        <input type="number" name="SOLUONG" value="1" min="1" class="form-control form-control-sm me-2" style="width:60px;" />
+                        <button type="submit" class="btn btn-sm btn-success">Thêm</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h4>Chi tiết hóa đơn</h4>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Dịch vụ</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cthd in Model.CHITIETHOADONs)
+        {
+            <tr>
+                <td>@cthd.DICHVU.TENDV</td>
+                <td>@cthd.SOLUONG</td>
+                <td>@cthd.THANHTIEN</td>
+                <td>
+                    <form action="@Url.Action("XoaDichVu", "BS")" method="post" style="display:inline">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="cthdId" value="@cthd.CTHD_ID" />
+                        <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+<div>Tổng tiền : @ViewBag.TongTien VND</div>
+<form action="@Url.Action("LuuKetQua", "BS")" method="post">
+    @Html.AntiForgeryToken()  <!-- Thêm dòng này -->
+
+    <input type="hidden" name="datLichKhamId" value="@Model.DATLICHKHAM_ID" />
+    <div class="mb-2">
+        <label>Chuẩn đoán</label>
+        <input class="form-control" type="text" name="chuandoan" />
+    </div>
+    <div class="mb-2">
+        <label>Kết luận</label>
+        <input class="form-control" type="text" name="ketluan" />
+    </div>
+    <div class="mb-2">
+        <label>Đơn thuốc</label>
+        <input class="form-control" type="text" name="thanhvien" />
+    </div>
+    <div class="mb-2">
+        <label>Ghi chú</label>
+        <textarea class="form-control" name="ghichu"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Hoàn tất khám</button>
+</form>
+
