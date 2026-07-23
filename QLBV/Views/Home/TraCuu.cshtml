@@ -1,18 +1,122 @@
 ﻿@{
-    ViewBag.Title = "Tra cứu kết quả";
+    ViewBag.Title = "Tra cứu lịch sử khám bệnh";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Tra cứu kết quả</h2>
+<style>
+    .tracuu-hero {
+        background: linear-gradient(135deg, #003A91 0%, #0056d6 100%);
+        padding: 60px 0 40px;
+        color: white;
+        text-align: center;
+    }
+    .tracuu-hero .icon-wrap {
+        font-size: 64px;
+        margin-bottom: 16px;
+    }
+    .tracuu-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 40px rgba(0,58,145,0.13);
+        padding: 40px;
+        max-width: 560px;
+        margin: -40px auto 40px;
+        position: relative;
+        z-index: 2;
+    }
+    .tracuu-card .form-control {
+        border-radius: 10px;
+        border: 2px solid #e0e7ef;
+        padding: 12px 16px;
+        font-size: 15px;
+        transition: border-color 0.2s;
+    }
+    .tracuu-card .form-control:focus {
+        border-color: #003A91;
+        box-shadow: 0 0 0 3px rgba(0,58,145,0.08);
+    }
+    .btn-tracuu {
+        background: linear-gradient(90deg, #003A91, #0056d6);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 13px 0;
+        font-size: 16px;
+        font-weight: 600;
+        width: 100%;
+        transition: opacity 0.2s;
+    }
+    .btn-tracuu:hover { opacity: 0.88; color: white; }
+    .input-icon { position: relative; }
+    .input-icon i {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #7a90b0;
+        font-size: 16px;
+    }
+    .input-icon .form-control { padding-left: 40px; }
+    .divider { display: flex; align-items: center; color: #aab; margin: 18px 0; }
+    .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: #e0e7ef; }
+    .divider span { margin: 0 12px; font-size: 13px; }
+</style>
 
-<form action="/Home/TraCuuKetQua" method="get">
-    <div class="mb-3">
-        <label>CCCD</label>
-        <input type="text" name="cccd" class="form-control" placeholder="Nhập CCCD" maxlength="12" />
+<div class="tracuu-hero">
+    <div class="icon-wrap">🔍</div>
+    <h2 style="font-weight:700;font-size:2rem;">Tra Cứu Lịch Sử Khám Bệnh</h2>
+    <p style="opacity:0.82;font-size:1rem;">Nhập thông tin để xem lại kết quả các lần khám trước</p>
+</div>
+
+<div class="container">
+    <div class="tracuu-card">
+        <form action="/Home/TraCuuKetQua" method="get" id="formTraCuu">
+            <div class="mb-4">
+                <label class="fw-semibold mb-2" style="color:#003A91"><i class="fas fa-id-card me-1"></i> Số CCCD</label>
+                <div class="input-icon">
+                    <i class="fas fa-id-card"></i>
+                    <input type="text" name="cccd" id="txtCCCD" class="form-control"
+                           placeholder="Nhập 12 số CCCD" maxlength="12"
+                           pattern="\d{12}" title="CCCD phải đủ 12 chữ số" />
+                </div>
+            </div>
+
+            <div class="divider"><span>hoặc</span></div>
+
+            <div class="mb-4">
+                <label class="fw-semibold mb-2" style="color:#003A91"><i class="fas fa-user me-1"></i> Mã bệnh nhân</label>
+                <div class="input-icon">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="mabn" id="txtMaBN" class="form-control"
+                           placeholder="Nhập mã bệnh nhân" />
+                </div>
+            </div>
+
+            <div id="errMsg" class="alert alert-danger d-none mb-3"></div>
+
+            <button type="submit" class="btn btn-tracuu">
+                <i class="fas fa-search me-2"></i> Tra Cứu Ngay
+            </button>
+        </form>
     </div>
-    <div class="mb-3">
-        <label>Mã bệnh nhân</label>
-        <input type="text" name="mabn" class="form-control" placeholder="Nhập Mã bệnh nhân" />
-    </div>
-    <button type="submit" class="btn btn-primary">Tìm</button>
-</form>
+</div>
+
+<script>
+document.getElementById('formTraCuu').addEventListener('submit', function(e) {
+    var cccd = document.getElementById('txtCCCD').value.trim();
+    var mabn = document.getElementById('txtMaBN').value.trim();
+    var err = document.getElementById('errMsg');
+    err.classList.add('d-none');
+    if (!cccd && !mabn) {
+        e.preventDefault();
+        err.textContent = 'Vui lòng nhập CCCD hoặc mã bệnh nhân để tra cứu!';
+        err.classList.remove('d-none');
+        return;
+    }
+    if (cccd && !/^\d{12}$/.test(cccd)) {
+        e.preventDefault();
+        err.textContent = 'CCCD phải gồm đúng 12 chữ số!';
+        err.classList.remove('d-none');
+    }
+});
+</script>

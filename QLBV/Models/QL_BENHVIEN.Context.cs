@@ -37,7 +37,6 @@ namespace QLBV.Models
         public virtual DbSet<HOADON> HOADONs { get; set; }
         public virtual DbSet<KETQUAKHAM> KETQUAKHAMs { get; set; }
         public virtual DbSet<KHOA> KHOAs { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     
         public virtual int PROC_ThemBenhNhan(string hOTENBENHNHAN, string cCCD, string sDT, string gIOITINH, Nullable<int> bACSI_ID)
         {
@@ -199,6 +198,19 @@ namespace QLBV.Models
                 new ObjectParameter("ten", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<TimBacSiTheoTen_Result>("[QL_BENHVIENEntities].[TimBacSiTheoTen](@ten)", tenParameter);
+        }
+    
+        public virtual int SP_TAO_QUYEN_BACSI(string maBacSi, string matKhau)
+        {
+            var maBacSiParameter = maBacSi != null ?
+                new ObjectParameter("MaBacSi", maBacSi) :
+                new ObjectParameter("MaBacSi", typeof(string));
+    
+            var matKhauParameter = matKhau != null ?
+                new ObjectParameter("MatKhau", matKhau) :
+                new ObjectParameter("MatKhau", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_TAO_QUYEN_BACSI", maBacSiParameter, matKhauParameter);
         }
     }
 }

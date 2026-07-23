@@ -1,0 +1,67 @@
+﻿@model IEnumerable<QLBV.Models.HOADON>
+
+@{
+    ViewBag.Title = "Quản lý hoá đơn";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2 class="mt-4 mb-4 fw-bold">Danh Sách Hoá Đơn Cần Thanh Toán</h2>
+
+<div class="card shadow">
+    <div class="card-body">
+        @if (Model == null || !Model.Any())
+        {
+            <div class="alert alert-success text-center">
+                Không có hoá đơn nào đang chờ thanh toán!
+            </div>
+        }
+        else
+        {
+            <table class="table table-bordered table-hover">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th class="text-center">Mã HD</th>
+                        <th>Ngày Lập</th>
+                        <th>Bệnh Nhân</th>
+                        <th>Mã Đặt Lịch</th>
+                        <th class="text-end">Tổng Tiền (VNĐ)</th>
+                        <th class="text-center">Trạng Thái</th>
+                        <th class="text-center">Hành Động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var hd in Model)
+                    {
+                        <tr>
+                            <td class="text-center fw-bold text-primary">@hd.MAHD</td>
+                            <td>@(hd.NGAYLAP.HasValue ? hd.NGAYLAP.Value.ToString("dd/MM/yyyy") : "")</td>
+                            <td>
+                                @(hd.DATLICHKHAM != null && hd.DATLICHKHAM.BENHNHAN != null ? hd.DATLICHKHAM.BENHNHAN.HOTENBENHNHAN : "Không rõ")
+                            </td>
+                            <td>
+                                @(hd.DATLICHKHAM_ID)
+                            </td>
+                            <td class="text-end text-danger fw-bold">
+                                @(hd.TONGTIEN.HasValue ? hd.TONGTIEN.Value.ToString("N0") : "0")
+                            </td>
+                            <td class="text-center">
+                                <span class="badge bg-warning text-dark">@hd.HINHTHUCTHANHTOAN</span>
+                            </td>
+                            <td class="text-center">
+                                <form action="/Admin/XacNhanThanhToan" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" value="@hd.HD_ID" />
+                                    <button type="submit" class="btn btn-sm btn-success fw-bold" onclick="return confirm('Xác nhận thu tiền cho hoá đơn này?');">
+                                        <i class="fa fa-check"></i> Xác nhận thu
+                                    </button>
+                                </form>
+                                <a href="@Url.Action("InHoaDon", "Admin", new { id = hd.HD_ID })" target="_blank" class="btn btn-sm btn-info text-white ms-1">
+                                    <i class="fa fa-print"></i> In
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

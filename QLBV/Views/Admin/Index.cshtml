@@ -99,67 +99,123 @@
             </div>
         </div>
     </div>
+    <!-- Charts Row 1: Revenue + Appointments -->
     <div class="row">
-        <div class="col-xl-6 mb-4">
+        <div class="col-xl-8 mb-4">
             <div class="card">
-                <div class="card-header">
-                    <i class="fa-solid fa-stethoscope"></i>
-                    Dịch Vụ Được Sử Dụng Nhiều Nhất
+                <div class="card-header"><i class="fas fa-chart-line me-2"></i>Biểu Đồ Doanh Thu Theo Tháng</div>
+                <div class="card-body">
+                    <div class="chart-container"><canvas id="revenueChart"></canvas></div>
                 </div>
+            </div>
+        </div>
+        <div class="col-xl-4 mb-4">
+            <div class="card">
+                <div class="card-header"><i class="fas fa-chart-bar me-2"></i>Lượt Khám Theo Tháng</div>
+                <div class="card-body">
+                    <div class="chart-container"><canvas id="lichKhamChart"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row 2: Doughnut + Top 5 + Dịch vụ -->
+    <div class="row">
+        <div class="col-xl-4 mb-4">
+            <div class="card">
+                <div class="card-header"><i class="fas fa-chart-pie me-2"></i>Bệnh Nhân Theo Khoa</div>
+                <div class="card-body">
+                    <div style="height:260px"><canvas id="khoaChart"></canvas></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 mb-4">
+            <div class="card">
+                <div class="card-header"><i class="fas fa-trophy me-2"></i>Top 5 Bác Sĩ Nhiều Lịch Nhất</div>
+                <div class="card-body p-0">
+                    <table class="table table-sm mb-0" id="top5BacSiTable">
+                        <thead class="table-primary">
+                            <tr><th>#</th><th>Bác Sĩ</th><th class="text-center">Số Lịch</th></tr>
+                        </thead>
+                        <tbody id="top5Body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 mb-4">
+            <div class="card">
+                <div class="card-header"><i class="fa-solid fa-stethoscope me-2"></i>Dịch Vụ Sử Dụng Nhiều</div>
                 @Html.Action("DichVuSuDungNhieu", "DashBoard")
             </div>
         </div>
-        <div class="col-xl-6 mb-4">
-            <div class="card">
-                <div class="card-header">
-                    Doanh Thu Tháng
-                </div>
-                <div class="fw-bold text-danger mb-0">
-                    @Html.Action("DoanhThuThang", "DashBoard")
-                </div>
-            </div>
-        </div>
-        @*<div class="col-xl-4 mb-4 card stat-card primary">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Doanh Thu Tháng
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.Action("DoanhThuThang", "DashBoard")</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-calendar stat-icon"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
     </div>
-
-    <!-- Recent Orders & Quick Actions -->
-    <!--<div class="row">
-        <div class="col-xl-12 mb-4">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <span>Đơn Hàng Gần Đây</span>
-
-                </div>-->
-                @*@Html.Action("DonHangGanDay", "DashBoard")*@
-            <!--</div>
-        </div>
-
-    </div>
-
-    <!-- Inventory Warning -->
-    <!--<div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <span>Sản Phẩm Sắp Hết Hàng</span>-->
-                    @*<a href="#inventory" class="btn btn-sm btn-danger">Nhập Hàng</a>*@
-                <!--</div>-->
-                @*@Html.Action("SanPhamSapHet", "DashBoard")*@
-            </div>
-        </div>
-    </div>-->
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const months = ['T1','T2','T3','T4','T5','T6','T7','T8','T9','T10','T11','T12'];
+
+    // Biểu đồ doanh thu
+    fetch('@Url.Action("BieuDoDoanhThuThang", "DashBoard")')
+        .then(r => r.json()).then(data => {
+            new Chart(document.getElementById('revenueChart'), {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{ label: 'Doanh Thu (VNĐ)', data: data,
+                        borderColor: '#4e73df', backgroundColor: 'rgba(78,115,223,0.1)',
+                        borderWidth: 3, fill: true, tension: 0.4 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false,
+                    plugins: { tooltip: { callbacks: { label: c => c.parsed.y.toLocaleString('vi-VN') + ' ₫' }}}}
+            });
+        });
+
+    // Biểu đồ lượt khám
+    fetch('@Url.Action("BieuDoLichKhamTheoThang", "DashBoard")')
+        .then(r => r.json()).then(data => {
+            new Chart(document.getElementById('lichKhamChart'), {
+                type: 'bar',
+                data: {
+                    labels: months,
+                    datasets: [{ label: 'Lượt Khám', data: data,
+                        backgroundColor: 'rgba(28,200,138,0.7)', borderColor: '#1cc88a',
+                        borderWidth: 1, borderRadius: 4 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+            });
+        });
+
+    // Biểu đồ tròn bệnh nhân theo khoa
+    fetch('@Url.Action("BieuDoBenhNhanTheoKhoa", "DashBoard")')
+        .then(r => r.json()).then(data => {
+            new Chart(document.getElementById('khoaChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: data.map(d => d.tenKhoa),
+                    datasets: [{ data: data.map(d => d.soLuong),
+                        backgroundColor: ['#4e73df','#1cc88a','#36b9cc','#f6c23e','#e74a3b','#858796'],
+                        hoverOffset: 10 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } } }
+            });
+        });
+
+    // Top 5 bác sĩ
+    fetch('@Url.Action("Top5BacSi", "DashBoard")')
+        .then(r => r.json()).then(data => {
+            const tbody = document.getElementById('top5Body');
+            data.forEach((d, i) => {
+                const medals = ['🥇','🥈','🥉','4️⃣','5️⃣'];
+                tbody.innerHTML += `<tr>
+                    <td>${medals[i]}</td>
+                    <td>${d.ten}</td>
+                    <td class="text-center"><span class="badge bg-primary">${d.soLich}</span></td>
+                </tr>`;
+            });
+        });
+});
+</script>

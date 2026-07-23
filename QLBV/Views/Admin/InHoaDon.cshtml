@@ -1,0 +1,146 @@
+﻿@model QLBV.Models.HOADON
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Hoá Đơn #@Model.HD_ID</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; font-size: 14px; color: #222; background: #fff; }
+        .invoice-wrap { max-width: 720px; margin: 20px auto; padding: 40px; border: 1px solid #ddd; }
+        .header { text-align: center; border-bottom: 2px solid #003A91; padding-bottom: 20px; margin-bottom: 24px; }
+        .header h1 { font-size: 22px; color: #003A91; font-weight: 900; letter-spacing: 1px; }
+        .header .subtitle { font-size: 11px; color: #666; margin-top: 4px; }
+        .invoice-title { text-align: center; font-size: 18px; font-weight: 700; color: #003A91; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 2px; }
+        .invoice-no { text-align: center; font-size: 13px; color: #555; margin-bottom: 20px; }
+        .info-row { display: flex; gap: 40px; margin-bottom: 20px; }
+        .info-box { flex: 1; }
+        .info-box label { font-size: 11px; text-transform: uppercase; color: #888; font-weight: 700; }
+        .info-box p { font-size: 14px; font-weight: 600; color: #1a2740; margin-top: 2px; }
+        .divider { border: none; border-top: 1px solid #e0e7ef; margin: 16px 0; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        table th { background: #003A91; color: white; padding: 9px 12px; font-size: 13px; text-align: left; }
+        table td { padding: 9px 12px; border-bottom: 1px solid #e0e7ef; font-size: 13px; }
+        table tr:last-child td { border-bottom: none; }
+        .total-row { font-size: 16px; font-weight: 800; color: #003A91; text-align: right; padding: 14px 0; border-top: 2px solid #003A91; }
+        .signature-row { display: flex; justify-content: space-between; margin-top: 50px; text-align: center; }
+        .signature-box { width: 200px; }
+        .signature-box .sig-title { font-weight: 700; font-size: 13px; }
+        .signature-box .sig-note { font-size: 11px; color: #888; margin-top: 4px; }
+        .signature-box .sig-line { border-top: 1px solid #888; margin-top: 60px; }
+        .badge-paid { display: inline-block; background: #e8f5e9; color: #2e7d32; font-size: 12px; font-weight: 700; padding: 3px 12px; border-radius: 20px; border: 1px solid #a5d6a7; }
+        .badge-unpaid { display: inline-block; background: #fff3e0; color: #e65100; font-size: 12px; font-weight: 700; padding: 3px 12px; border-radius: 20px; border: 1px solid #ffcc80; }
+        .no-print { display: flex; gap: 10px; justify-content: center; margin: 20px 0; }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; }
+            .invoice-wrap { border: none; margin: 0; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="no-print">
+        <button onclick="window.print()" style="background:#003A91;color:white;border:none;padding:9px 24px;border-radius:8px;font-size:14px;cursor:pointer;">
+            🖨️ In hoá đơn
+        </button>
+        <button onclick="window.close()" style="background:#eee;color:#333;border:none;padding:9px 24px;border-radius:8px;font-size:14px;cursor:pointer;">
+            ✕ Đóng
+        </button>
+    </div>
+
+    <div class="invoice-wrap">
+        <div class="header">
+            <h1>🏥 BỆNH VIỆN TÂM ANH</h1>
+            <div class="subtitle">108 Hoàng Như Tiếp, Long Biên, Hà Nội | ĐT: 1800 6858</div>
+            <div class="subtitle">Website: tamanhhospital.vn</div>
+        </div>
+
+        <div class="invoice-title">Hoá Đơn Thanh Toán Dịch Vụ Y Tế</div>
+        <div class="invoice-no">
+            Mã hoá đơn: <strong>#@Model.HD_ID</strong> &nbsp;|&nbsp;
+            Ngày lập: <strong>@(Model.NGAYLAP.HasValue ? Model.NGAYLAP.Value.ToString("dd/MM/yyyy") : "—")</strong> &nbsp;|&nbsp;
+            Trạng thái:
+            @if (Model.HINHTHUCTHANHTOAN == "Đã thanh toán")
+            {
+                <span class="badge-paid">✓ Đã thanh toán</span>
+            }
+            else
+            {
+                <span class="badge-unpaid">⏳ Chưa thanh toán</span>
+            }
+        </div>
+
+        <hr class="divider"/>
+        <div class="info-row">
+            <div class="info-box">
+                <label>Thông tin bệnh nhân</label>
+                <p>@(Model.DATLICHKHAM != null && Model.DATLICHKHAM.BENHNHAN != null ? Model.DATLICHKHAM.BENHNHAN.HOTENBENHNHAN : "—")</p>
+            </div>
+            <div class="info-box">
+                <label>Mã đặt lịch</label>
+                <p>#@Model.DATLICHKHAM_ID</p>
+            </div>
+            <div class="info-box">
+                <label>Hình thức thanh toán</label>
+                <p>@(Model.HINHTHUCTHANHTOAN ?? "—")</p>
+            </div>
+        </div>
+        <hr class="divider"/>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:40px">#</th>
+                    <th>Dịch Vụ</th>
+                    <th style="width:80px;text-align:center">SL</th>
+                    <th style="width:120px;text-align:right">Đơn Giá</th>
+                    <th style="width:130px;text-align:right">Thành Tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.CHITIETHOADONs != null && Model.CHITIETHOADONs.Any())
+                {
+                    int stt = 1;
+                    foreach (var ct in Model.CHITIETHOADONs)
+                    {
+                        <tr>
+                            <td>@(stt++)</td>
+                            <td>@(ct.DICHVU != null ? ct.DICHVU.TENDV : "—")</td>
+                            <td style="text-align:center">@ct.SOLUONG</td>
+                            <td style="text-align:right">@(ct.DICHVU != null ? ct.DICHVU.DONGIA.Value.ToString("N0") + " ₫" : "—")</td>
+                            <td style="text-align:right">@((ct.DICHVU != null && ct.DICHVU.DONGIA.HasValue) ? ((ct.DICHVU.DONGIA.Value * (ct.SOLUONG ?? 1)).ToString("N0") + " ₫") : "—")</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="5" style="text-align:center;color:#888;">Không có chi tiết dịch vụ</td></tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="total-row">
+            Tổng cộng: @(Model.TONGTIEN.HasValue ? Model.TONGTIEN.Value.ToString("N0") + " ₫" : "—")
+        </div>
+
+        <div class="signature-row">
+            <div class="signature-box">
+                <div class="sig-title">Người thanh toán</div>
+                <div class="sig-note">(Ký và ghi rõ họ tên)</div>
+                <div class="sig-line"></div>
+            </div>
+            <div class="signature-box">
+                <div class="sig-title">Thu ngân</div>
+                <div class="sig-note">(Ký và ghi rõ họ tên)</div>
+                <div class="sig-line"></div>
+            </div>
+        </div>
+        <div style="text-align:center;font-size:11px;color:#aaa;margin-top:36px;border-top:1px dashed #ddd;padding-top:12px;">
+            Cảm ơn quý bệnh nhân đã tin tưởng sử dụng dịch vụ của Bệnh Viện Tâm Anh!
+        </div>
+    </div>
+</body>
+</html>

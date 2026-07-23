@@ -1,0 +1,81 @@
+﻿@model IEnumerable<QLBV.Models.DATLICHKHAM>
+@{
+    ViewBag.Title = "Lịch Sắp Tới";
+    Layout = "~/Views/Shared/_LayoutBacSi.cshtml";
+    var grouped = Model.GroupBy(d => d.NGAYKHAM.Value.Date).OrderBy(g => g.Key);
+    var today = DateTime.Today;
+}
+
+<style>
+    .lich-header { background: linear-gradient(135deg,#003A91,#0056d6); color:white; border-radius:12px; padding:24px 28px; margin-bottom:28px; }
+    .day-card { border-radius:12px; box-shadow:0 3px 16px rgba(0,58,145,0.09); margin-bottom:22px; overflow:hidden; }
+    .day-card .day-title { padding:12px 20px; font-weight:700; font-size:15px; display:flex; align-items:center; gap:10px; }
+    .day-today { background:#003A91; color:white; }
+    .day-future { background:#e8f0fe; color:#003A91; }
+    .lich-item { display:flex; align-items:center; gap:16px; padding:14px 20px; border-bottom:1px solid #f0f4fa; background:white; }
+    .lich-item:last-child { border-bottom:none; }
+    .lich-time { background:#e8f0fe; color:#003A91; border-radius:8px; padding:6px 12px; font-weight:700; font-size:14px; min-width:70px; text-align:center; }
+    .lich-name { font-weight:600; font-size:15px; color:#1a2740; }
+    .lich-sub { font-size:12px; color:#7a90b0; margin-top:2px; }
+    .badge-dat { background:#fff3e0; color:#e65100; border:1px solid #ffcc80; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:700; }
+    .badge-kham { background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:700; }
+    .empty-state { text-align:center; padding:80px 20px; }
+    .empty-state .icon { font-size:72px; opacity:0.35; margin-bottom:16px; }
+</style>
+
+<div class="lich-header">
+    <h4 class="mb-1"><i class="fas fa-calendar-alt me-2"></i>Lịch Khám Sắp Tới</h4>
+    <p class="mb-0" style="opacity:0.85;">
+        Hiển thị lịch từ hôm nay đến 7 ngày tới &nbsp;|&nbsp;
+        Tổng: <strong>@Model.Count() lịch</strong>
+    </p>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="empty-state">
+        <div class="icon">📅</div>
+        <h5 style="color:#555;">Không có lịch khám nào</h5>
+        <p class="text-muted">Trong 7 ngày tới bạn chưa có lịch khám nào được đặt.</p>
+    </div>
+}
+else
+{
+    foreach (var group in grouped)
+    {
+        bool isToday = group.Key.Date == today;
+        string dayLabel = isToday ? "🟢 Hôm nay - " : "📅 ";
+        string dayStr = dayLabel + group.Key.ToString("dddd, dd/MM/yyyy");
+        <div class="day-card">
+            <div class="day-title @(isToday ? "day-today" : "day-future")">
+                @dayStr
+                <span class="ms-auto" style="font-size:13px;font-weight:500;">@group.Count() lịch</span>
+            </div>
+            @foreach (var lich in group.OrderBy(l => l.CAKHAM_MAPPING != null ? l.CAKHAM_MAPPING.GIOKHAM : TimeSpan.Zero))
+            {
+                var gioKham = lich.CAKHAM_MAPPING?.GIOKHAM;
+                var tenBN = lich.BENHNHAN?.HOTENBENHNHAN ?? "—";
+                var sdt = lich.BENHNHAN?.SDT ?? "";
+                <div class="lich-item">
+                    <div class="lich-time">
+                        @(gioKham.HasValue ? gioKham.Value.ToString(@"hh\:mm") : "--:--")
+                    </div>
+                    <div style="flex:1">
+                        <div class="lich-name">@tenBN</div>
+                        <div class="lich-sub"><i class="fas fa-phone me-1"></i>@sdt</div>
+                    </div>
+                    <div>
+                        @if (lich.TRANGTHAI == "Đã khám")
+                        {
+                            <span class="badge-kham">✓ Đã khám</span>
+                        }
+                        else
+                        {
+                            <span class="badge-dat">⏳ Đã đặt</span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}

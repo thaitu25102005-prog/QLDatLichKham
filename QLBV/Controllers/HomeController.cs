@@ -36,11 +36,15 @@ namespace QLBV.Controllers
             return Json(list, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult DatLichKham(int mabacsi, string ngaykham, int cakhams, string cccd)
+        public JsonResult DatLichKham(int mabacsi, string ngaykham, int cakhams, string cccd, string hoten, string sdt, string gioitinh)
         {
             try
             {
                 DateTime ngay = DateTime.ParseExact(ngaykham, "yyyy-MM-dd", null);
+                if (ngay.Date < DateTime.Today)
+                {
+                    return Json(new { success = false, message = "Không thể đặt lịch vào ngày trong quá khứ!" });
+                }
 
                 // Check bác sĩ tồn tại
                 var bacsi = db.BACSIs.FirstOrDefault(b => b.BACSI_ID == mabacsi);
@@ -58,13 +62,13 @@ namespace QLBV.Controllers
                     bn = new BENHNHAN
                     {
 
-                        HOTENBENHNHAN = "Bệnh nhân mới",
-                        SDT = "",
-                        GIOITINH = "",
+                        HOTENBENHNHAN = string.IsNullOrEmpty(hoten) ? "Bệnh nhân mới" : hoten,
+                        SDT = sdt ?? "",
+                        GIOITINH = gioitinh ?? "",
                         BACSI_ID = mabacsi,
                         CCCD = cccd
                     };
-                    db.PROC_ThemBenhNhan(bn.HOTENBENHNHAN,bn.CCCD, bn.SDT, bn.GIOITINH, bn.BACSI_ID);
+                    db.BENHNHANs.Add(bn);
 
                     db.SaveChanges(); 
                 }
