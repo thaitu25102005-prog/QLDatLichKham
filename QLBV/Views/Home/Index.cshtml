@@ -15,8 +15,23 @@
                 <input type="text" id="txtCCCD" class="form-control" maxlength="12" placeholder="Nhập 12 số CCCD" />
 
 
+                <!-- Tên bệnh nhân -->
+                <label class="mt-3"><b>Họ và tên</b></label>
+                <input type="text" id="txtHoTen" class="form-control" placeholder="Nhập họ tên (nếu mới)" />
+
+                <!-- Số điện thoại -->
+                <label class="mt-3"><b>Số điện thoại</b></label>
+                <input type="text" id="txtSDT" class="form-control" placeholder="Nhập số điện thoại" />
+
+                <!-- Giới tính -->
+                <label class="mt-3"><b>Giới tính</b></label>
+                <select id="cboGioiTinh" class="form-control">
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                </select>
+
                 <!-- Chọn khoa -->
-                <label><b>Chọn chuyên khoa</b></label>
+                <label class="mt-3"><b>Chọn chuyên khoa</b></label>
                 <select id="cboKhoa" class="form-control">
                     <option value="">-- Chọn chuyên khoa --</option>
                     @foreach (var k in ViewBag.ListKhoa)
@@ -47,7 +62,7 @@
 
                 <!-- Ngày -->
                 <label class="mt-3"><b>Ngày khám</b></label>
-                <input type="date" id="ngayKham" class="form-control" />
+                <input type="date" id="ngayKham" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
 
                 <button class="btn btn-warning mt-3 w-100" id="btnDangKy">Đăng ký khám</button>
             </div>
@@ -130,8 +145,11 @@
         var ngaykham = $("#ngayKham").val();
         var cakhams = parseInt($("#cboCaKham").val());
         var cccd = $("#txtCCCD").val().trim();
+        var hoten = $("#txtHoTen").val().trim();
+        var sdt = $("#txtSDT").val().trim();
+        var gioitinh = $("#cboGioiTinh").val();
 
-        if (!mabacsi || !ngaykham || !cakhams || !cccd) {
+        if (!mabacsi || !ngaykham || !cakhams || !cccd || !hoten || !sdt) {
             alert("Vui lòng điền đầy đủ thông tin!");
             return;
         }
@@ -142,7 +160,7 @@
         }
 
         $.post("/Home/DatLichKham",
-            { mabacsi, ngaykham, cakhams, cccd },
+            { mabacsi, ngaykham, cakhams, cccd, hoten, sdt, gioitinh },
             function (res) {
                 alert(res.message);
             }

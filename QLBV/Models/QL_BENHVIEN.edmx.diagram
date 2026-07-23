@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0a325bdf5b9e4f9baf51794fea2d8ab5" Name="Diagram1">
+      <Diagram DiagramId="0a325bdf5b9e4f9baf51794fea2d8ab5" Name="Diagram1" ZoomLevel="34">
         <EntityTypeShape EntityType="QL_BENHVIENModel.BACSI" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QL_BENHVIENModel.BENHNHAN" Width="1.5" PointX="7.5" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="QL_BENHVIENModel.BENHVIEN" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
@@ -15,7 +15,6 @@
         <EntityTypeShape EntityType="QL_BENHVIENModel.HOADON" Width="1.5" PointX="12" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="QL_BENHVIENModel.KETQUAKHAM" Width="1.5" PointX="12" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="QL_BENHVIENModel.KHOA" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_BENHVIENModel.sysdiagram" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
         <AssociationConnector Association="QL_BENHVIENModel.FK__BACSI__KHOA_ID__4E88ABD4" ManuallyRouted="false" />
         <AssociationConnector Association="QL_BENHVIENModel.FK__BENHNHAN__BACSI___52593CB8" ManuallyRouted="false" />
         <AssociationConnector Association="QL_BENHVIENModel.FK__DATLICHKH__BACSI__5BE2A6F2" ManuallyRouted="false" />

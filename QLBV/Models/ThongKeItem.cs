@@ -1,59 +1,75 @@
-﻿using DoAnCuoiKy.Models;
 using QLBV.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+
 namespace DoAnCuoiKy.Models
 {
     public class ThongKeItem
     {
-        QL_BENHVIENEntities db = new QL_BENHVIENEntities();
-        public List<HOADON> listhd = new List<HOADON>();
-        public List<BACSI> listbs = new List<BACSI>();
-        public List<DATLICHKHAM> listdl = new List<DATLICHKHAM>();
-        public ThongKeItem()
+        private readonly QL_BENHVIENEntities db = new QL_BENHVIENEntities();
+
+        // Dùng SQL aggregate thay vì load toàn bộ list
+        public decimal DoanhThuNgay()
         {
-            listhd = db.HOADONs.ToList();
-            listbs = db.BACSIs.ToList();
-            listdl = db.DATLICHKHAMs.ToList();
+            var today = DateTime.Today;
+            return db.HOADONs
+                .Where(x => x.NGAYLAP.HasValue && x.NGAYLAP.Value == today)
+                .Sum(x => (decimal?)x.TONGTIEN) ?? 0;
         }
-        public decimal? DoanhThuNgay()
+
+        public decimal DoanhThuThang()
         {
-            return listhd.Where(x => x.NGAYLAP.Value.Date == DateTime.Today).Sum(x => x.TONGTIEN);
+            int month = DateTime.Now.Month;
+            int year  = DateTime.Now.Year;
+            return db.HOADONs
+                .Where(x => x.NGAYLAP.HasValue
+                         && x.NGAYLAP.Value.Month == month
+                         && x.NGAYLAP.Value.Year  == year)
+                .Sum(x => (decimal?)x.TONGTIEN) ?? 0;
         }
-        public decimal? DoanhThuThang()
-        {
-            return listhd.Where(x => x.NGAYLAP.Value.Month == DateTime.Now.Month && x.NGAYLAP.Value.Year == DateTime.Now.Year).Sum(x => x.TONGTIEN);
-        }
+
         public List<decimal> DoanhThuNam()
         {
-            List<decimal> doanhThu = new List<decimal>();
-            for (int i = 1; i <= 12; i++)
-            {
-                decimal dt = listhd.Where(x => x.NGAYLAP.HasValue && x.NGAYLAP.Value.Month == i && x.NGAYLAP.Value.Year == DateTime.Now.Year).Sum(x => x.TONGTIEN) ?? 0;
-                doanhThu.Add(dt);
-            }
-            return doanhThu;
+            int year = DateTime.Now.Year;
+            // Một query duy nhất group by tháng
+            var raw = db.HOADONs
+                .Where(x => x.NGAYLAP.HasValue && x.NGAYLAP.Value.Year == year)
+                .GroupBy(x => x.NGAYLAP.Value.Month)
+                .Select(g => new { Month = g.Key, Total = g.Sum(x => x.TONGTIEN) })
+                .ToList();
+
+            var result = new List<decimal>(new decimal[12]);
+            foreach (var item in raw)
+                result[item.Month - 1] = item.Total ?? 0;
+            return result;
         }
+
         public int SoLuongBS()
         {
-            return listbs.Count();
+            return db.BACSIs.Count();
         }
+
         public int SoLichKhamHomNay()
         {
-            return listdl.Where(x => x.NGAYKHAM.Value.Date == DateTime.Today).Count();
+            var today = DateTime.Today;
+            return db.DATLICHKHAMs
+                .Count(x => x.NGAYKHAM.HasValue && x.NGAYKHAM.Value == today);
         }
+
         public int SoBenhNhanHomNay()
         {
-            return listdl.Where(x => x.NGAYKHAM.Value.Date == DateTime.Today).Select(x => x.BNHAN_ID).Distinct().Count();
+            var today = DateTime.Today;
+            return db.DATLICHKHAMs
+                .Where(x => x.NGAYKHAM.HasValue && x.NGAYKHAM.Value == today)
+                .Select(x => x.BNHAN_ID)
+                .Distinct()
+                .Count();
         }
 
         public List<ThongKeDV> DVSuDung()
         {
-            var DVsudungnhieu = db.Database.SqlQuery<ThongKeDV>("SP_DICHVUSUDUNGNHIEU").ToList();
-            return DVsudungnhieu;
+            return db.Database.SqlQuery<ThongKeDV>("SP_DICHVUSUDUNGNHIEU").ToList();
         }
     }
 }

@@ -8,8 +8,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using QLBV.Filters;
+
 namespace QLBV.Controllers
 {
+    [AdminAuth]
     public class AdminController : Controller
     {
         QL_BENHVIENEntities db = new QL_BENHVIENEntities();
@@ -82,15 +85,19 @@ namespace QLBV.Controllers
                 string Dir = "/images/";
                 if (Image != null && Image.ContentLength > 0)
                 {
-                    FileName = Path.GetFileName(Image.FileName);
-                    string physicalDir = Server.MapPath(Dir);
-                    if (!Directory.Exists(physicalDir))
+                    string ext = Path.GetExtension(Image.FileName).ToLower();
+                    if (ext == ".jpg" || ext == ".png" || ext == ".jpeg" || ext == ".gif")
                     {
-                        Directory.CreateDirectory(physicalDir);
+                        FileName = Path.GetFileName(Image.FileName);
+                        string physicalDir = Server.MapPath(Dir);
+                        if (!Directory.Exists(physicalDir))
+                        {
+                            Directory.CreateDirectory(physicalDir);
+                        }
+                        string path = Path.Combine(Server.MapPath(Dir), FileName);
+                        Image.SaveAs(path);
+                        bsMoi.AVATAR = Dir + FileName;
                     }
-                    string path = Path.Combine(Server.MapPath(Dir), FileName);
-                    Image.SaveAs(path);
-                    bsMoi.AVATAR = Dir + FileName;
                 }
 
                 db.BACSIs.Add(bsMoi);
@@ -135,20 +142,27 @@ namespace QLBV.Controllers
                 string Dir = "/images/";
                 if (Image != null && Image.ContentLength > 0)
                 {
-                    FileName = Path.GetFileName(Image.FileName);
-                    string physicalDir = Server.MapPath(Dir);
-                    if (!Directory.Exists(physicalDir))
+                    string ext = Path.GetExtension(Image.FileName).ToLower();
+                    if (ext == ".jpg" || ext == ".png" || ext == ".jpeg" || ext == ".gif")
                     {
-                        Directory.CreateDirectory(physicalDir);
+                        FileName = Path.GetFileName(Image.FileName);
+                        string physicalDir = Server.MapPath(Dir);
+                        if (!Directory.Exists(physicalDir))
+                        {
+                            Directory.CreateDirectory(physicalDir);
+                        }
+                        string path = Path.Combine(Server.MapPath(Dir), FileName);
+                        Image.SaveAs(path);
+                        bsMoi.AVATAR = Dir + FileName;
                     }
-                    string path = Path.Combine(Server.MapPath(Dir), FileName);
-                    Image.SaveAs(path);
-                    BACSI ha = new BACSI
+                    else
                     {
-                        MABACSI = selectedNew.MABACSI,
-                        AVATAR = Dir + FileName
-                    };
-                    db.BACSIs.Add(ha);
+                        bsMoi.AVATAR = selectedNew.AVATAR;
+                    }
+                }
+                else
+                {
+                    bsMoi.AVATAR = selectedNew.AVATAR;
                 }
                 selectedNew.MABACSI = bsMoi.MABACSI;
                 selectedNew.TENBACSI = bsMoi.TENBACSI;
@@ -243,6 +257,33 @@ namespace QLBV.Controllers
             }
             return RedirectToAction("LoadDichVu");
 
+        }
+        public ActionResult QuanLyHoaDon()
+        {
+            var hoadons = db.HOADONs
+                            .Where(h => h.HINHTHUCTHANHTOAN == "Chưa thanh toán")
+                            .OrderBy(h => h.NGAYLAP)
+                            .ToList();
+            return View(hoadons);
+        }
+
+        [HttpPost]
+        public ActionResult XacNhanThanhToan(int id)
+        {
+            var hd = db.HOADONs.FirstOrDefault(h => h.HD_ID == id);
+            if (hd != null)
+            {
+                hd.HINHTHUCTHANHTOAN = "Đã thanh toán";
+                db.SaveChanges();
+            }
+            return RedirectToAction("QuanLyHoaDon");
+        }
+
+        public ActionResult InHoaDon(int id)
+        {
+            var hd = db.HOADONs.FirstOrDefault(h => h.HD_ID == id);
+            if (hd == null) return HttpNotFound();
+            return View(hd);
         }
     }
 }

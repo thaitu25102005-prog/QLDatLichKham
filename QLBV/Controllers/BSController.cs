@@ -5,8 +5,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using QLBV.Filters;
+
 namespace QLBV.Controllers
 {
+    [BSAuth]
     public class BSController : Controller
     {
         // GET: BS
@@ -50,11 +53,10 @@ namespace QLBV.Controllers
             ViewBag.BacSi = bacsi;
             ViewBag.ID_BS = id;
 
-            // Lấy danh sách bệnh nhân đang khám bác sĩ này
+            // Lấy danh sách bệnh nhân có lịch hôm nay (tất cả trạng thái)
             var benhnhans = db.DATLICHKHAMs
              .Where(d =>
                  d.BACSI_ID == id &&
-                 d.TRANGTHAI == "Đã đặt" &&
                  d.NGAYKHAM == DateTime.Today
              )
              .Select(d => d.BENHNHAN)
@@ -239,7 +241,7 @@ namespace QLBV.Controllers
                     DATLICHKHAM_ID = datLichKhamId,
                     CHUANDOAN = chuandoan,
                     KETLUAN = ketluan,
-                    THANHVIEN = thanhvien,
+                    THANHVIEN = Session["UserName"] != null ? Session["UserName"].ToString() : thanhvien,
                     GHICHU = ghichu
                 };
                 db.KETQUAKHAMs.Add(kq);
@@ -248,7 +250,7 @@ namespace QLBV.Controllers
             {
                 kq.CHUANDOAN = chuandoan;
                 kq.KETLUAN = ketluan;
-                kq.THANHVIEN = thanhvien;
+                kq.THANHVIEN = Session["UserName"] != null ? Session["UserName"].ToString() : thanhvien;
                 kq.GHICHU = ghichu;
             }
 
@@ -258,6 +260,23 @@ namespace QLBV.Controllers
             return RedirectToAction("DanhSachBenhNhan");
         }
 
+        public ActionResult LichSapToi()
+        {
+            if (Session["BacSiID"] == null) return RedirectToAction("Login", "Login");
+            int bacsiId = (int)Session["BacSiID"];
 
+            var today = DateTime.Today;
+            var nextWeek = today.AddDays(7);
+
+            var lichList = db.DATLICHKHAMs
+                .Where(d => d.BACSI_ID == bacsiId
+                    && d.NGAYKHAM >= today
+                    && d.NGAYKHAM <= nextWeek)
+                .OrderBy(d => d.NGAYKHAM)
+                .ToList();
+
+            ViewBag.ID_BS = bacsiId;
+            return View(lichList);
+        }
     }
 }

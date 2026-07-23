@@ -41,6 +41,38 @@ namespace DoAnCuoiKy.Controllers
         {
             return View(dh.DVSuDung());
         }
-        
+
+        public JsonResult BieuDoLichKhamTheoThang()
+        {
+            int year = DateTime.Now.Year;
+            var data = Enumerable.Range(1, 12).Select(m =>
+                db.DATLICHKHAMs.Count(d => d.NGAYKHAM.HasValue &&
+                    d.NGAYKHAM.Value.Year == year &&
+                    d.NGAYKHAM.Value.Month == m)
+            ).ToList();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult BieuDoBenhNhanTheoKhoa()
+        {
+            var data = db.KHOAs.Select(k => new {
+                tenKhoa = k.TENKHOA,
+                soLuong = k.BACSIs.SelectMany(b => b.BENHNHANs).Count()
+            }).ToList();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Top5BacSi()
+        {
+            var data = db.BACSIs
+                .Select(b => new {
+                    ten = b.TENBACSI,
+                    soLich = b.DATLICHKHAMs.Count()
+                })
+                .OrderByDescending(x => x.soLich)
+                .Take(5)
+                .ToList();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
     }
 }

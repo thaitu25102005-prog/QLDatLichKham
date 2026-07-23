@@ -1,48 +1,115 @@
 ﻿@model List<QLBV.Models.FN_XuatKetQuaDaKham_TheoBN_Result>
 
 @{
-    ViewBag.Title = "Kết quả khám";
+    ViewBag.Title = "Kết quả khám bệnh";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Kết quả khám</h2>
+<style>
+    .kq-hero {
+        background: linear-gradient(135deg, #003A91 0%, #0056d6 100%);
+        padding: 40px 0 30px;
+        color: white;
+        text-align: center;
+    }
+    .timeline-card {
+        border-left: 4px solid #003A91;
+        border-radius: 0 12px 12px 0;
+        background: white;
+        box-shadow: 0 3px 18px rgba(0,58,145,0.09);
+        margin-bottom: 22px;
+        padding: 22px 24px;
+        transition: box-shadow 0.2s;
+        position: relative;
+    }
+    .timeline-card:hover { box-shadow: 0 8px 32px rgba(0,58,145,0.16); }
+    .timeline-dot {
+        width: 14px; height: 14px;
+        background: #003A91;
+        border-radius: 50%;
+        position: absolute;
+        left: -9px; top: 26px;
+        border: 3px solid #fff;
+        box-shadow: 0 0 0 2px #003A91;
+    }
+    .badge-kq { background: #e8f0fe; color: #003A91; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+    .kq-label { font-size: 12px; color: #7a90b0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .kq-value { font-size: 15px; color: #1a2740; margin-top: 2px; }
+    .empty-state { text-align: center; padding: 80px 20px; }
+    .empty-state .icon { font-size: 72px; margin-bottom: 20px; opacity: 0.4; }
+</style>
 
-@if (ViewBag.KetQuaCount == 0)
-{
-    <div class="alert alert-warning">Không tìm thấy kết quả nào!</div>
-}
-else
-{
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Mã KQ</th>
-                <th>Họ tên</th>
-                <th>SDT</th>
-                <th>Chuẩn đoán</th>
-                <th>Kết luận</th>
-                <th>Thành viên</th>
-                <th>Ghi chú</th>
-                <th>Ngày khám</th>
-                <th>Bác sĩ chuẩn trị</th>
-            </tr>
-        </thead>
-        <tbody>
+<div class="kq-hero">
+    <h2 style="font-weight:700;"><i class="fas fa-file-medical-alt me-2"></i>Kết Quả Khám Bệnh</h2>
+    @if (Model != null && Model.Count > 0)
+    {
+        <p style="opacity:0.85;">Tìm thấy <strong>@Model.Count</strong> lần khám</p>
+    }
+</div>
+
+<div class="container py-4">
+    <div class="mb-3">
+        <a href="/Home/TraCuu" class="btn btn-outline-primary btn-sm">
+            <i class="fas fa-arrow-left me-1"></i> Tra cứu lại
+        </a>
+    </div>
+
+    @if (Model == null || Model.Count == 0)
+    {
+        <div class="empty-state">
+            <div class="icon">🔍</div>
+            <h4 style="color:#555;">Không tìm thấy kết quả</h4>
+            <p class="text-muted">Không có lịch sử khám bệnh với thông tin đã nhập.<br/>Vui lòng kiểm tra lại CCCD hoặc mã bệnh nhân.</p>
+            <a href="/Home/TraCuu" class="btn btn-primary mt-2">Thử lại</a>
+        </div>
+    }
+    else
+    {
+        <div style="position:relative; padding-left: 12px;">
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>@item.MAKQ</td>
-                    <td>@item.HOTENBENHNHAN</td>
-                    <td>@item.SDT</td>
-                    <td>@item.CHUANDOAN</td>
-                    <td>@item.KETLUAN</td>
-                    <td>@item.THANHVIEN</td>
-                    <td>@item.GHICHU</td>
-                    <td>@item.NGAYKHAM</td>
-                    <td>@item.TENBACSI</td>
-                </tr>
+                <div class="timeline-card">
+                    <div class="timeline-dot"></div>
+                    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
+                        <div>
+                            <span class="badge-kq">Mã KQ: @item.MAKQ</span>
+                            <span class="ms-2 text-muted" style="font-size:13px;">
+                                <i class="fas fa-calendar me-1"></i>@item.NGAYKHAM
+                            </span>
+                        </div>
+                        <span class="badge bg-success">@item.TENBACSI</span>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="kq-label">Bệnh nhân</div>
+                            <div class="kq-value fw-semibold">@item.HOTENBENHNHAN</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="kq-label">Số điện thoại</div>
+                            <div class="kq-value">@item.SDT</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="kq-label">Thành viên</div>
+                            <div class="kq-value">@item.THANHVIEN</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="kq-label"><i class="fas fa-stethoscope me-1"></i>Chẩn đoán</div>
+                            <div class="kq-value">@(string.IsNullOrEmpty(item.CHUANDOAN) ? "—" : item.CHUANDOAN)</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="kq-label"><i class="fas fa-clipboard-check me-1"></i>Kết luận</div>
+                            <div class="kq-value">@(string.IsNullOrEmpty(item.KETLUAN) ? "—" : item.KETLUAN)</div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(item.GHICHU))
+                        {
+                            <div class="col-12">
+                                <div class="kq-label">Ghi chú</div>
+                                <div class="kq-value text-muted" style="font-style:italic;">@item.GHICHU</div>
+                            </div>
+                        }
+                    </div>
+                </div>
             }
-        </tbody>
-    </table>
-
-}
+        </div>
+    }
+</div>
